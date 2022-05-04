@@ -1,17 +1,29 @@
-import '../styles/Home.css';
-import React from 'react';
-import Slider from './../components/Slider';
-import products from '../data/Products';
+import React, { useEffect, useState } from 'react';
+import Slider from '../components/Slider';
 import CarouselSlider from '../components/CarouselSlider';
+import axios from 'axios';
+import '../styles/Home.css';
 
 function Home() {
+    const [products, setProducts] = useState();
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            const { data } = await axios.get("/api/products");
+            setProducts(data);
+        };
+        fetchProducts();
+    }, []);
+
     return (
         <>
-            <Slider />
-            <CarouselSlider products={products} />
-            <CarouselSlider products={products} />
-            <CarouselSlider products={products} />
-            <CarouselSlider products={products} />
+            {products && <>
+                <Slider />
+                <CarouselSlider products={products.smartphones} />
+                <CarouselSlider products={products.books} />
+                <CarouselSlider products={products.gadgets} />
+                <CarouselSlider products={products.others} />
+            </>}
         </>
     )
 }

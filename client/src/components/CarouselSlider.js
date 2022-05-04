@@ -29,7 +29,6 @@ function CarouselSlider({ products }) {
 
     return (
         <div className="carousel">
-
             <Carousel
                 deviceType={device}
                 responsive={responsive}
@@ -45,6 +44,9 @@ function CarouselSlider({ products }) {
                                 price={product.price}
                                 rating={product.rating}
                                 image={product.image}
+                                numReviews={product.numReviews}
+                                category={product.category}
+                                countInStock={product.countInStock}
                             />
                         );
                     })

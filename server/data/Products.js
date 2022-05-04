@@ -8,6 +8,7 @@ const products = {
             rating: 5,
             countInStock: 12,
             numReviews: 4,
+            category: "smartphones",
         },
         {
             id: 12,
@@ -17,6 +18,7 @@ const products = {
             rating: 4,
             countInStock: 20,
             numReviews: 4,
+            category: "smartphones",
         },
         {
             id: 13,
@@ -26,6 +28,7 @@ const products = {
             rating: 5,
             countInStock: 14,
             numReviews: 3,
+            category: "smartphones",
         },
         {
             id: 14,
@@ -35,6 +38,7 @@ const products = {
             rating: 3,
             countInStock: 8,
             numReviews: 3,
+            category: "smartphones",
         },
         {
             id: 15,
@@ -44,6 +48,7 @@ const products = {
             rating: 5,
             countInStock: 5,
             numReviews: 6,
+            category: "smartphones",
         },
         {
             id: 16,
@@ -53,6 +58,7 @@ const products = {
             rating: 5,
             countInStock: 9,
             numReviews: 10,
+            category: "smartphones",
         },
     ],
     books: [
@@ -64,6 +70,7 @@ const products = {
             rating: 5,
             countInStock: 30,
             numReviews: 6,
+            category: "books",
         },
         {
             id: 21,
@@ -73,6 +80,7 @@ const products = {
             rating: 5,
             countInStock: 20,
             numReviews: 2,
+            category: "books",
         },
         {
             id: 22,
@@ -82,6 +90,7 @@ const products = {
             rating: 4,
             countInStock: 14,
             numReviews: 2,
+            category: "books",
         },
         {
             id: 23,
@@ -91,6 +100,7 @@ const products = {
             rating: 4,
             countInStock: 14,
             numReviews: 2,
+            category: "books",
         },
         {
             id: 24,
@@ -100,6 +110,7 @@ const products = {
             rating: 5,
             countInStock: 6,
             numReviews: 2,
+            category: "books",
         },
     ],
     gadgets: [
@@ -111,6 +122,7 @@ const products = {
             rating: 5,
             countInStock: 20,
             numReviews: 2,
+            category: "gadgets",
         },
         {
             id: 31,
@@ -120,6 +132,7 @@ const products = {
             rating: 4,
             countInStock: 15,
             numReviews: 5,
+            category: "gadgets",
         },
         {
             id: 32,
@@ -129,6 +142,7 @@ const products = {
             rating: 5,
             countInStock: 7,
             numReviews: 1,
+            category: "gadgets",
         },
         {
             id: 33,
@@ -138,6 +152,7 @@ const products = {
             rating: 4,
             countInStock: 9,
             numReviews: 10,
+            category: "gadgets",
         },
         {
             id: 34,
@@ -147,6 +162,7 @@ const products = {
             rating: 5,
             countInStock: 4,
             numReviews: 2,
+            category: "gadgets",
         },
         {
             id: 35,
@@ -156,6 +172,7 @@ const products = {
             rating: 5,
             countInStock: 2,
             numReviews: 0,
+            category: "gadgets",
         }
     ],
     others: [
@@ -167,6 +184,7 @@ const products = {
             rating: 5,
             countInStock: 20,
             numReviews: 2,
+            category: "others",
         },
         {
             id: 41,
@@ -176,6 +194,7 @@ const products = {
             rating: 4,
             countInStock: 15,
             numReviews: 5,
+            category: "others",
         },
         {
             id: 42,
@@ -185,6 +204,7 @@ const products = {
             rating: 5,
             countInStock: 7,
             numReviews: 1,
+            category: "others",
         },
         {
             id: 43,
@@ -194,6 +214,7 @@ const products = {
             rating: 5,
             countInStock: 9,
             numReviews: 10,
+            category: "others",
         },
         {
             id: 44,
@@ -203,6 +224,7 @@ const products = {
             rating: 5,
             countInStock: 4,
             numReviews: 2,
+            category: "others",
         },
         {
             id: 45,
@@ -212,6 +234,7 @@ const products = {
             rating: 5,
             countInStock: 2,
             numReviews: 0,
+            category: "others",
         }
     ],
 }
