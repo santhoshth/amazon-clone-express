@@ -6,19 +6,17 @@ import axios from 'axios';
 import Rating from '../components/Rating';
 
 const SingleProduct = () => {
-
-    const { category } = useParams();
     const { id } = useParams();
 
     const [product, setProduct] = useState({});
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const { data } = await axios.get(`/api/products/${category}/${id}`);
+            const { data } = await axios.get(`/api/products/${id}`);
             setProduct(data);
         };
         fetchProducts();
-    }, [category, id]);
+    }, [id]);
 
 
     const addToCart = () => {

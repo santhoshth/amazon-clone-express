@@ -11,13 +11,14 @@ function Product({ id, title, price, rating, image, numReviews, countInStock, ca
     }
 
     const toProduct = () => {
-        navigate(`/products/${category}/${id}`);
+        navigate(`/products/${id}`);
+        window.scrollTo({ top: 0 });
     }
 
     return (
         <div className="product">
             <div className="product__info" key={id}>
-                <Link className="link" to={`/products/${category}/${id}`}>
+                <Link className="link" to={`/products/${id}`}>
                     <p>{title}</p>
                 </Link>
                 <p className="product__price">

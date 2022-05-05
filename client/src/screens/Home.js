@@ -19,10 +19,10 @@ function Home() {
         <>
             {products && <>
                 <Slider />
-                <CarouselSlider products={products.smartphones} />
-                <CarouselSlider products={products.books} />
-                <CarouselSlider products={products.gadgets} />
-                <CarouselSlider products={products.others} />
+                <CarouselSlider products={products.filter(p => p.category === "smartphones")} />
+                <CarouselSlider products={products.filter(p => p.category === "books")} />
+                <CarouselSlider products={products.filter(p => p.category === "gadgets")} />
+                <CarouselSlider products={products.filter(p => p.category === "others")} />
             </>}
         </>
     )
