@@ -83,6 +83,8 @@
 }
 
 .login__registerTitle {
+    text-align: center;
+    margin-top: 20px;
     font-size: 12px;
     font-weight: 600;
     color: gray;

@@ -37,12 +37,12 @@ function Login() {
                     <button type="submit" onClick={e => signIn(e)}>Sign In</button>
                 </form>
                 <p className="login__conditions">By continuing, you agree to Amazon Fake Clone's Conditions of Use and Privacy Notice. </p>
-            </div>
 
-            <div className="login__register">
                 <p className="login__registerTitle">New to Amazon?</p>
                 <button className="login__registerButton" onClick={e => register(e)}>Create your Amazon account</button>
             </div>
+
+
         </div>
     )
 }
