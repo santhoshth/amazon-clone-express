@@ -2,9 +2,10 @@ import "../styles/Product.css";
 import { Link, useNavigate } from 'react-router-dom';
 import Rating from "./Rating";
 
-function Product({ id, title, price, rating, image, numReviews, countInStock, category }) {
+function Product({ id, title, price, rating, image, numReviews, countInStock, category, reviews }) {
 
     const navigate = useNavigate();
+    console.log(id)
 
     const addToCart = async () => {
         console.log(`ADDED TO CART --- ${title}`);

@@ -13,7 +13,7 @@ const SingleProduct = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             const { data } = await axios.get(`/api/products/${id}`);
-            setProduct(data);
+            await setProduct(data);
         };
         fetchProducts();
     }, [id]);
@@ -37,8 +37,8 @@ const SingleProduct = () => {
                             <strong>₹{product.price}</strong>
                         </div>
                         <div className="row">
-                            <p>Status</p>
-                            <strong>{product.countInStock > 0 ? "In Stock" : "Unavailable"}</strong>
+                            <p>Availability</p>
+                            <strong>{product.countInStock > 0 ? "In Stock" : "Out of Stock"}</strong>
                         </div>
                         <div className="row">
                             {/* <p>Reviews</p> */}
@@ -73,17 +73,26 @@ const SingleProduct = () => {
             <div className="bottom">
                 <div className="review">
                     <h2>Reviews</h2>
+                    {product.reviews ? product.reviews.map(review =>
+                        <Review
+                            name={review.name}
+                            title={review.title}
+                            comment={review.comment}
+                            rating={review.rating}
+                            date={review.date}
+                        />
+                    ) : null}
                     <Review
                         name="Santhosh"
                         title="Best product"
-                        message="worth to buy this is one the best u can get in this price range worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang "
+                        comment="worth to buy this is one the best u can get in this price range worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang "
                         date="02-04-2022"
                         rating={5}
                     />
                     <Review
                         name="Santhosh"
                         title="Best product"
-                        message="worth to buy this is one the best u can get in this price range worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang "
+                        comment="worth to buy this is one the best u can get in this price range worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang "
                         date="02-04-2022"
                         rating={5}
                     />

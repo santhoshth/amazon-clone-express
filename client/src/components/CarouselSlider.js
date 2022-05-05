@@ -39,7 +39,7 @@ function CarouselSlider({ products }) {
                     products.map(product => {
                         return (
                             <Product
-                                id={product.id}
+                                id={product._id}
                                 title={product.title}
                                 price={product.price}
                                 rating={product.rating}
@@ -47,6 +47,7 @@ function CarouselSlider({ products }) {
                                 numReviews={product.numReviews}
                                 category={product.category}
                                 countInStock={product.countInStock}
+                                reviews={product.reviews}
                             />
                         );
                     })

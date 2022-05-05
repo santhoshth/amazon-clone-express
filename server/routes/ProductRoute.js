@@ -17,8 +17,8 @@ productRoute.get("/:id", asyncHandler(
         if (product) {
             res.json(product);
         } else {
-            throw new Error("Product Not Found");
             res.status(404);
+            throw new Error("Product Not Found");
         }
 
     }

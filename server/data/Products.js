@@ -7,6 +7,22 @@ const products = [
         countInStock: 12,
         numReviews: 4,
         category: "smartphones",
+        reviews: [
+            {
+                name: "Santhosh",
+                title: "Best One must buy",
+                rating: 4.5,
+                comment: "Best product in this price range Best product in this price range Best product in this price range Best product in this price range Best product in this price range",
+                user: "62737292991c1b32e8248e0a"
+            },
+            {
+                name: "Sandy",
+                title: "Best One must buy",
+                rating: 1,
+                comment: "Best product in this price range Best product in this price range Best product in this price range Best product in this price range Best product in this price range",
+                user: "62737292991c1b32e8248e0a"
+            },
+        ]
     },
     {
         title: "OPPO A31 (Mystery Black, 6GB RAM, 128GB Storage)",
