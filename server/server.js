@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connectDatabase from './config/MongoDB.js';
 import ImportData from './DataImport.js';
+import productRoute from './routes/ProductRoute.js';
 
 dotenv.config();
 connectDatabase();
@@ -9,19 +10,10 @@ const app = express();
 
 // API
 app.use("/api/import", ImportData);
-
-// app.get('/api/products', (req, res) => {
-//     res.json(products);
-// })
-
-// app.get('/api/products/:id', (req, res) => {
-//     const productId = parseInt(req.params.id);
-//     const product = products.find(p => p.id === productId);
-//     res.json(product);
-// })
+app.use("/api/products", productRoute);
 
 app.get('/', (req, res) => {
-    res.send("API is running....");
+    res.send("API is runninggg....");
 })
 
 const PORT = process.env.PORT || 1000;
