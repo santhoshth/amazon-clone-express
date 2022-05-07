@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Review from '../components/Review';
 import '../styles/SingleProduct.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import Rating from '../components/Rating';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProductDetails } from '../redux/actions/ProductActions';
@@ -9,8 +9,10 @@ import Loading from '../components/Loading';
 import Error from '../components/Error';
 
 const SingleProduct = () => {
-
     const { id } = useParams();
+    const navigate = useNavigate();
+
+    const [quantity, setQuantity] = useState(1);
 
     const dispatch = useDispatch();
 
@@ -21,9 +23,10 @@ const SingleProduct = () => {
         dispatch(listProductDetails(id));
     }, [dispatch, id]);
 
+    const addToCartHandle = (e) => {
+        e.preventDefault();
+        navigate(`/cart/${id}?quantity=${quantity}`);
 
-
-    const addToCart = () => {
         console.log(`ADDED TO CART --- ${product.title}`);
     }
 
@@ -35,7 +38,6 @@ const SingleProduct = () => {
                 <Error error={error} />
             ) : (
                 <>
-
                     <div className="single__product">
                         <div className="top">
                             <div className="product__image">
@@ -53,7 +55,6 @@ const SingleProduct = () => {
                                         <strong>{product.countInStock > 0 ? "In Stock" : "Out of Stock"}</strong>
                                     </div>
                                     <div className="row">
-                                        {/* <p>Reviews</p> */}
                                         <p><Rating value={product.rating} /></p>
                                         <strong>{product.numReviews} reviews</strong>
                                     </div>
@@ -61,7 +62,10 @@ const SingleProduct = () => {
                                         <>
                                             <div className="row">
                                                 <p>Quantity</p>
-                                                <select>
+                                                <select
+                                                    value={quantity}
+                                                    onChange={(e) => setQuantity(e.target.value)}
+                                                >
                                                     {[...Array(product.countInStock).keys()].map((x) => (
                                                         <option key={x + 1} value={x + 1}>
                                                             {x + 1}
@@ -69,14 +73,13 @@ const SingleProduct = () => {
                                                     ))}
                                                 </select>
                                             </div>
-
                                         </>
                                     ) : null}
                                 </div>
                                 {product.countInStock > 0 ? (
                                     <>
                                         <div className="row__button">
-                                            <button className="product__button" onClick={addToCart}><h3>Add to Cart</h3></button>
+                                            <button className="product__button" onClick={e => addToCartHandle(e)}><h3>Add to Cart</h3></button>
                                         </div>
                                     </>
                                 ) : null}

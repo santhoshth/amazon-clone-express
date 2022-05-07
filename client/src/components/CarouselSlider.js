@@ -7,7 +7,7 @@ import Product from './Product';
 function CarouselSlider({ products }) {
     const responsive = {
         superLargeDesktop: {
-            // the naming can be any, depends on you.
+            // the naming can be any
             breakpoint: { max: 4000, min: 3000 },
             items: 5
         },
@@ -31,14 +31,15 @@ function CarouselSlider({ products }) {
         <div className="carousel">
             <Carousel
                 deviceType={device}
+                draggable={false}
                 responsive={responsive}
                 autoPlaySpeed={1000000}
-                autoPlay={device !== "mobile" ? true : false}
             >
                 {
                     products.map(product => {
                         return (
                             <Product
+                                key={product._id}
                                 id={product._id}
                                 title={product.title}
                                 price={product.price}

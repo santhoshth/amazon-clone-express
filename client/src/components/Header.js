@@ -3,8 +3,14 @@ import logo from '../logo.jpg';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function Header() {
+
+    const cart = useSelector((state) => state.cart);
+    const { cartItems } = cart;
+
+    const cartItemsCount = cartItems.length === 0 ? 0 : cartItems.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
 
     return (
         <div className='header'>
@@ -54,11 +60,11 @@ function Header() {
                     </span>
                 </div>
 
-                <Link className='link' to='/checkout'>
+                <Link className='link' to='/cart'>
                     <div className='header__optionBasket'>
                         <ShoppingCartIcon />
                         <span className='header__optionLineTwo header__basketCount'>
-                            4
+                            {cartItemsCount}
                         </span>
                     </div>
                 </Link>

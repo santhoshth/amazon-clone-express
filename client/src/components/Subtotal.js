@@ -12,6 +12,10 @@ function Subtotal({ total, itemCount }) {
     // so, useHistory object history will be used as event handler
     const navigate = useNavigate();
 
+    const checkoutHandler = () => {
+        navigate('/login?redirect=payment');
+    }
+
     return (
         <div className="subtotal">
             <CurrencyFormat
@@ -33,7 +37,7 @@ function Subtotal({ total, itemCount }) {
                 prefix={" ₹"}
             />
 
-            <button className="subtotal__button" onClick={e => navigate('/payment')}>Proceed to Checkout</button>
+            <button className="subtotal__button" onClick={checkoutHandler}>Proceed to Checkout</button>
         </div>
     )
 }

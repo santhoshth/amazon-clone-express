@@ -14,7 +14,7 @@ function Slider() {
 
     return (
         <div className="slider">
-            <Slide easing="ease">
+            <Slide easing="ease" duration={10000} transitionDuration={250} canSwipe={false}>
                 <div className="each-slide">
                     <div className="slider-div">
                         <img className="slider-img" src={slideImages[0]} alt="slider__img" />

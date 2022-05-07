@@ -19,7 +19,8 @@ function App() {
           <Route path="/orders" element={<><Header /><Orders /></>} />
           <Route path="/login" element={<Login />} />
           <Route path="/payment" element={<><Header /><Payment /></>} />
-          <Route path="/checkout" element={<><Header /><Checkout /></>} />
+          <Route path="/cart/:id" element={<><Header /><Checkout /></>} />
+          <Route path="/cart" element={<><Header /><Checkout /></>} />
           <Route path="/" element={<><Header /><Home /><Footer /></>} />
         </Routes>
       </div>

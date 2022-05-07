@@ -18,6 +18,10 @@
 
 }
 
+.subtotal__count {
+    font-size: 18px;
+}
+
 .subtotal__gift>input {
     margin-right: 5px;
 }
