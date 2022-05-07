@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React from 'react';
 import Footer from './components/Footer';
 import SingleProduct from './screens/SingleProduct';
+import Register from './screens/Register';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/products/:id" element={<><Header /><SingleProduct /><Footer /></>} />
           <Route path="/orders" element={<><Header /><Orders /></>} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/payment" element={<><Header /><Payment /></>} />
           <Route path="/cart/:id" element={<><Header /><Checkout /></>} />
           <Route path="/cart" element={<><Header /><Checkout /></>} />

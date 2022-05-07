@@ -10,7 +10,14 @@ function Header() {
     const cart = useSelector((state) => state.cart);
     const { cartItems } = cart;
 
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+
     const cartItemsCount = cartItems.length === 0 ? 0 : cartItems.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
+
+    const signOut = () => {
+        console.log("will sign out");
+    }
 
     return (
         <div className='header'>
@@ -29,13 +36,13 @@ function Header() {
             {/* Header Navigation Icons like Sign in, Orders, Cart Navigation*/}
             <div className='header__nav'>
                 {/* If no user then navigate to login page */}
-                <Link className='link' to='/login'>
+                <Link className='link' to={userInfo === null && "/login"}>
                     <div className='header__option'>
                         <span className='header__optionLineOne'>
-                            Hello, Guest
+                            Hello, {userInfo ? userInfo.name : 'Guest'}
                         </span>
-                        <span className='header__optionLineTwo' >
-                            Sign In
+                        <span className='header__optionLineTwo' onClick={userInfo !== null && signOut}>
+                            {userInfo ? "Sign Out" : "Sign In"}
                         </span>
                     </div>
                 </Link>
