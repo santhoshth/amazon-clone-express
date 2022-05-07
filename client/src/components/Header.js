@@ -3,9 +3,11 @@ import logo from '../logo.jpg';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../redux/actions/UserActions';
 
 function Header() {
+    const dispatch = useDispatch();
 
     const cart = useSelector((state) => state.cart);
     const { cartItems } = cart;
@@ -16,7 +18,8 @@ function Header() {
     const cartItemsCount = cartItems.length === 0 ? 0 : cartItems.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
 
     const signOut = () => {
-        console.log("will sign out");
+        dispatch(logout());
+        console.log(`SIGN OUT --- ${userInfo.name}`);
     }
 
     return (
@@ -36,12 +39,12 @@ function Header() {
             {/* Header Navigation Icons like Sign in, Orders, Cart Navigation*/}
             <div className='header__nav'>
                 {/* If no user then navigate to login page */}
-                <Link className='link' to={userInfo === null && "/login"}>
+                <Link className='link' to={userInfo ? "#" : "/login"}>
                     <div className='header__option'>
                         <span className='header__optionLineOne'>
                             Hello, {userInfo ? userInfo.name : 'Guest'}
                         </span>
-                        <span className='header__optionLineTwo' onClick={userInfo !== null && signOut}>
+                        <span className='header__optionLineTwo submenu__trigger' onClick={userInfo !== null && signOut}>
                             {userInfo ? "Sign Out" : "Sign In"}
                         </span>
                     </div>

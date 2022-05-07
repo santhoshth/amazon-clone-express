@@ -3,7 +3,6 @@ import '../styles/Login.css';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from './../redux/actions/UserActions.js';
-import Loading from '../components/Loading';
 import Error from '../components/Error';
 
 function Login() {
@@ -18,7 +17,7 @@ function Login() {
     const redirect = location.search ? location.search.split("=")[1] : "/";
 
     const userLogin = useSelector((state) => state.userLogin);
-    const { error, loading, userInfo } = userLogin;
+    const { error, userInfo } = userLogin;
 
     useEffect(() => {
         if (userInfo) {
@@ -30,7 +29,6 @@ function Login() {
         // to avoid refreshing the page on clicking submit
         e.preventDefault();
         dispatch(login(email, password));
-        // navigate('/');
     }
 
     return (
@@ -41,7 +39,6 @@ function Login() {
             {error ? <Error error={error} /> : null}
             <div className="login__container">
                 <p className="login__title">Sign-In</p>
-                {loading && <Loading />}
                 <form className="login__form">
                     <h5>Email</h5>
                     <input type="text" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
