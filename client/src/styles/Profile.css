@@ -12,7 +12,29 @@
     background-color: white;
 }
 
+.shipping {
+    padding-bottom: 20px;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 380px;
+    background-color: white;
+}
+
+.shipping__container {
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding-bottom: 15px;
+}
+
 .profile__nav {
+    margin-top: 10px;
+    padding-left: 10px;
+    display: flex;
+    font-size: 13px;
+}
+
+.shipping__nav {
     margin-top: 10px;
     padding-left: 10px;
     display: flex;
@@ -43,6 +65,15 @@
     padding-right: 10px;
 }
 
+.shipping__title {
+    margin-top: 15px;
+    padding-top: 15px;
+    font-size: 28px;
+    font-weight: 520;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
 .profile__list {
     margin: 10px;
     margin-top: 15px;
@@ -51,6 +82,13 @@
     border-right: 2px solid #e8e8e8;
     border-radius: 5px;
 }
+
+.shipping__list {
+    margin: 10px;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+
 
 .profile__list__row {
     padding-top: 15px;
@@ -61,13 +99,29 @@
     border-bottom: 2px solid #e8e8e8;
 }
 
+.shipping__list__row {
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+}
+
 .profile__list__row__left {
     flex: 0.2;
     height: 60px;
     min-width: 250px;
 }
 
+.shipping__list__row__left {
+    height: 60px;
+    width: 400px;
+}
+
 .profile__list__row__left>span {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.shipping__list__row__left>span {
     font-size: 14px;
     font-weight: 700;
 }
@@ -81,9 +135,20 @@
     margin-top: 3px;
 }
 
+.new__input__shipping {
+    margin-top: 3px;
+}
+
 .new__input>input {
     padding: 5px;
     width: 180px;
+    border-radius: 3px;
+    border: 2px solid #abaeb3;
+}
+
+.new__input__shipping>input {
+    padding: 5px;
+    width: 300px;
     border-radius: 3px;
     border: 2px solid #abaeb3;
 }
@@ -97,8 +162,6 @@
     background: #f0c14b;
     border: 1px solid lightgray;
     border-color: #a88734 #9c7e31 #846a29;
-    /* background: #e9ebee; */
-    /* border: 1px solid #abaeb3; */
     color: black;
     border-radius: 3px;
     padding-left: 25px;
@@ -110,10 +173,31 @@
 
 .edit__button:hover {
     background: #f7ca00;
-    /* background: #dadada; */
 }
 
 .edit__button:active {
     background: #f0c14b;
-    /* background: #e9ebee; */
+}
+
+.edit__button__shipping {
+    background: #f0c14b;
+    border: 1px solid lightgray;
+    border-color: #a88734 #9c7e31 #846a29;
+    color: black;
+    border-radius: 3px;
+    padding-left: 25px;
+    padding-right: 25px;
+    height: 30px;
+    margin-top: 5px;
+    margin-left: 31px;
+    margin-bottom: 15px;
+    width: 310px;
+}
+
+.edit__button__shipping:hover {
+    background: #f7ca00;
+}
+
+.edit__button__shipping:active {
+    background: #f0c14b;
 }

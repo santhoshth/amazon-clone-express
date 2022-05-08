@@ -13,7 +13,7 @@ function Subtotal({ total, itemCount }) {
     const navigate = useNavigate();
 
     const checkoutHandler = () => {
-        navigate('/login?redirect=payment');
+        navigate('/login?redirect=/shipping');
     }
 
     return (

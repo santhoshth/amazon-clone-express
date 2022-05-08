@@ -13,6 +13,7 @@ import SingleProduct from './screens/SingleProduct';
 import Register from './screens/Register';
 import Account from './screens/Account';
 import Profile from './screens/Profile';
+import Shipping from './screens/Shipping';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/products/:id" element={<><Header /><SingleProduct /><Footer /></>} />
           <Route path="/orders" element={<><Header /><Orders /></>} />
+          <Route path="/shipping" element={<><Header /><Shipping /><Footer /></>} />
           <Route path="/profile" element={<><Header /><Profile /><Footer /></>} />
           <Route path="/account" element={<><Header /><Account /><Footer /></>} />
           <Route path="/login" element={<Login />} />
