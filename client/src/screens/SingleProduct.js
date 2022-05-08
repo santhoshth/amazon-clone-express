@@ -101,14 +101,14 @@ const SingleProduct = () => {
                                     name="Santhosh"
                                     title="Best product"
                                     comment="worth to buy this is one the best u can get in this price range worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang "
-                                    date="02-04-2022"
+                                    // date={12042022}
                                     rating={5}
                                 />
                                 <Review
                                     name="Santhosh"
                                     title="Best product"
                                     comment="worth to buy this is one the best u can get in this price range worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang "
-                                    date="02-04-2022"
+                                    // date={12042022}
                                     rating={5}
                                 />
                             </div>

@@ -61,7 +61,7 @@ function Header() {
                     </div>
                 </Link>
 
-                <Link className='link' to='/account'>
+                <Link className='link' to={userInfo !== null ? '/account' : '/login'}>
                     <div className='header__option'>
                         <span className='header__optionLineOne'>
                             Your
