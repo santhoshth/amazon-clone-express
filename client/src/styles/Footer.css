@@ -55,6 +55,7 @@
     padding-left: 50px;
     padding-right: 50px;
     height: 300px;
+    min-width: 160px;
 }
 
 .c1>p,
