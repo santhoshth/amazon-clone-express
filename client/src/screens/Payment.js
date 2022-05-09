@@ -1,134 +1,44 @@
 // import { useEffect, useState } from 'react';
 import '../styles/Payment.css'
-// import { useStateValue } from './StateProvider';
 import CheckoutProduct from '../components/CheckoutProduct';
 import { Link, useNavigate } from 'react-router-dom';
-// import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import CurrencyFormat from 'react-currency-format';
-// import { getTotalPrice } from './reducer';
-// import axios from './axios';
-// import { db } from './firebase';
-// import { collection, doc, setDoc } from "firebase/firestore";
+import { useSelector } from 'react-redux';
 
 function Payment() {
 
-    // const [{ basket, user }, updateState] = useStateValue();
-
-    // const qty = basket != null ? basket.length : 0;
-    // const item = basket.length > 1 ? "items" : "item";
-
     const navigate = useNavigate();
+    // const dispatch = useDispatch();
 
-    // const stripe = useStripe();
-    // const elements = useElements();
+    const cart = useSelector((state) => state.cart);
+    const { cartItems } = cart;
+    const { shippingAddress } = cart;
 
-    // const [succeeded, setSucceeded] = useState(false);
-    // const [processing, setProcessing] = useState("");
-    // const [error, setError] = useState(null);
-    // const [disabled, setDisabled] = useState(true);
-    // const [clientSecret, setClientSecret] = useState(true);
+    // const userLogin = useSelector((state) => state.userLogin);
+    // const { userInfo } = userLogin;
 
+    const cartTotal = cartItems.reduce((total, item) => total + item.subTotal, 0);
+    const cartTotalQuantiy = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-    // // when ever the basket changes, client secret will be updated with the new total amount and hepls us to charge the the right amount from the customer
-    // useEffect(() => {
-    //     if (!user) {
-    //         navigate('/Login');
-    //     }
-
-    //     // generate the special stripe secret which allows us to charge a customer
-    //     const getClientSecret = async () => {
-    //         const response = await axios({
-    //             method: 'post',
-    //             // stripe expects the total in currencies subunits (Rs.1 is 100 paise)
-    //             url: `/payments/create?total=${getTotalPrice(basket) * 100}`
-    //         });
-    //         setClientSecret(response.data.clientSecret);
-    //     }
-
-    //     getClientSecret();
-
-    // }, [basket])
-
-    // console.log("secret key is", clientSecret);
 
     const handleSubmit = () => {
         navigate('/orders');
     }
 
-    // const handleSubmit = async (event) => {
-    //     // stripe functionality here
-
-    //     event.preventDefault();
-    //     setProcessing(true);
-
-    //     // confirming the payment with client secret and payment method using Card Elements 
-    //     const payload = await stripe.confirmCardPayment(clientSecret, {
-    //         payment_method: {
-    //             card: elements.getElement(CardElement)
-    //         }
-    //     }).then(({ paymentIntent }) => {
-    //         // paymentIntent means payment confirmation
-
-    //         const docData = {
-    //             basket: basket,
-    //             amount: paymentIntent.amount,
-    //             created: paymentIntent.created
-    //         }
-
-    //         // In the firestore db access the users collection
-    //         const userCollection = collection(db, "users");
-
-    //         // In the user collection reach to document of specific user id
-    //         const userDoc = doc(userCollection, user?.uid);
-
-    //         // In the document of user reach to the orders collection
-    //         const orderCollection = collection(userDoc, "orders");
-
-    //         // in the orders collection reach to document of unique order id
-    //         const orderDoc = doc(orderCollection, paymentIntent.id);
-
-    //         // in the document of order set doc with doc data
-    //         setDoc(orderDoc, docData);
-
-    //         // old way to set data
-    //         /* db.collection('users').doc(user?.uid).collection('orders').doc('paymentIntent.id').set({
-    //             data
-    //         }) */
-
-    //         setSucceeded(true);
-    //         setError(null);
-    //         setProcessing(false);
-
-    //         updateState({
-    //             type: 'EMPTY_BASKET'
-    //         })
-
-    //         navigate('/orders');
-    //     })
-    // }
-
-    // const handleChange = event => {
-    //     // listen for changes in the CardElement
-    //     // and display any errors as the customer types their card details
-
-
-    //     setDisabled(event.empty);
-    //     setError(event.error ? event.error.message : "");
-    // }
-
     return (
         <div className="payment">
             <div className="payment__container">
-                <h2>Checkout (<Link to={'/checkout'}>1</Link>)</h2>
+                <h2>Checkout (<Link to={'/cart'}>{cartTotalQuantiy}</Link>)</h2>
                 <div className="payment__section">
                     <div className="payment__title">
                         <h3>Delivery Address</h3>
                     </div>
                     <div className="payment__content">
-                        {/* <p>{!user ? "Guest" : user.email}</p> */}
-                        <p>Guest</p>
-                        <p>Address Line 1</p>
-                        <p>Address Line 2</p>
+                        <p>{shippingAddress.name}</p>
+                        <p>{shippingAddress.address}</p>
+                        <p>{shippingAddress.city}</p>
+                        <p>{shippingAddress.pincode}</p>
+                        <p>{shippingAddress.country}</p>
                     </div>
                 </div>
 
@@ -137,13 +47,18 @@ function Payment() {
                         <h3>Review Items and Delivery</h3>
                     </div>
                     <div className="payment__content">
-                        <CheckoutProduct
-                            id={101}
-                            title="Deception Point by Dan Brown"
-                            price="3000"
-                            rating={5}
-                            image="https://images-na.ssl-images-amazon.com/images/I/61MKKdDbJlL.jpg"
-                        />
+                        {cartItems.map((cartItem) => (
+                            <CheckoutProduct
+                                id={cartItem.product}
+                                title={cartItem.title}
+                                price={cartItem.price}
+                                subTotal={cartItem.subTotal}
+                                image={cartItem.image}
+                                quantity={cartItem.quantity}
+                                countInStock={cartItem.countInStock}
+                                paymentPageButton={true}
+                            />
+                        ))}
                     </div>
                 </div>
 
@@ -161,10 +76,10 @@ function Payment() {
                                         <h3>Order Total: {value}</h3>
                                     )}
                                     decimalScale={2}
-                                    value={3000}
+                                    value={cartTotal}
                                     displayType={"text"}
                                     thousandSeparator={true}
-                                    prefix={" ₹"}
+                                    prefix={" ₹ "}
                                 />
 
                                 <button>

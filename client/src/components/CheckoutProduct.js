@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { addToCart, removeFromCart } from '../redux/actions/CartActions';
 import '../styles/CheckoutProduct.css';
 
-function CheckoutProduct({ id, title, price, rating, image, orderPageButton, subTotal, quantity, countInStock }) {
+function CheckoutProduct({ id, title, price, rating, image, orderPageButton, paymentPageButton, subTotal, quantity, countInStock }) {
 
     const dispatch = useDispatch();
 
@@ -36,15 +36,17 @@ function CheckoutProduct({ id, title, price, rating, image, orderPageButton, sub
                         value={quantity}
                         onChange={(e) => dispatch(addToCart(id, Number(e.target.value)))}
                     >
-                        {[...Array(countInStock).keys()].map((x) => (
+                        {!paymentPageButton ? [...Array(countInStock).keys()].map((x) => (
                             <option key={x + 1} value={x + 1}>
                                 {x + 1}
                             </option>
-                        ))}
+                        )) : <option value={quantity} key={quantity}>{quantity}</option>}
                     </select>
                 </div>
+                {!paymentPageButton ? (
+                    <button className="checkoutProduct__button" onClick={() => removeFromCartHandler(id)}>{buttonType}</button>
+                ) : null}
 
-                <button className="checkoutProduct__button" onClick={() => removeFromCartHandler(id)}>{buttonType}</button>
             </div>
             <div className="checkoutProduct__subtotal">
                 <small>₹ </small>
