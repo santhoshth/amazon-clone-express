@@ -9,8 +9,8 @@ const orderSchema = mongoose.Schema(
         },
         orderItems: [
             {
-                name: { type: String, required: true },
-                qty: { type: Number, required: true },
+                title: { type: String, required: true },
+                quantity: { type: Number, required: true },
                 image: { type: String, required: true },
                 price: { type: Number, required: true },
                 product: {
@@ -21,14 +21,15 @@ const orderSchema = mongoose.Schema(
             },
         ],
         shippingAddress: {
+            name: { type: String, required: true },
             address: { type: String, required: true },
             city: { type: String, required: true },
-            postalCode: { type: String, required: true },
+            pincode: { type: String, required: true },
             country: { type: String, required: true },
         },
         paymentMethod: {
             type: String,
-            required: true,
+            // required: true,
             default: "Paypal",
         },
         paymentResult: {
@@ -39,12 +40,12 @@ const orderSchema = mongoose.Schema(
         },
         taxPrice: {
             type: Number,
-            required: true,
+            // required: true,
             default: 0.0,
         },
         shippingPrice: {
             type: Number,
-            required: true,
+            // required: true,
             default: 0.0,
         },
         totalPrice: {
@@ -74,6 +75,6 @@ const orderSchema = mongoose.Schema(
     }
 )
 
-const order = moongoose.model('Order', orderSchema);
+const Order = mongoose.model('Order', orderSchema);
 
-export default order;
+export default Order;

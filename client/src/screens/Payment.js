@@ -1,28 +1,52 @@
-// import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import '../styles/Payment.css'
 import CheckoutProduct from '../components/CheckoutProduct';
 import { Link, useNavigate } from 'react-router-dom';
 import CurrencyFormat from 'react-currency-format';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { ORDER_CREATE_RESET } from '../redux/constants/OrderConstants';
+import { createOrder } from './../redux/actions/OrderActions';
+import Error from './../components/Error';
 
 function Payment() {
 
     const navigate = useNavigate();
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const cart = useSelector((state) => state.cart);
     const { cartItems } = cart;
     const { shippingAddress } = cart;
 
-    // const userLogin = useSelector((state) => state.userLogin);
-    // const { userInfo } = userLogin;
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
 
-    const cartTotal = cartItems.reduce((total, item) => total + item.subTotal, 0);
-    const cartTotalQuantiy = cartItems.reduce((total, item) => total + item.quantity, 0);
+    const cartTotalPrice = cartItems?.reduce((total, item) => total + item.subTotal, 0);
+    const cartTotalQuantiy = cartItems?.reduce((total, item) => total + item.quantity, 0);
+
+    const orderCreate = useSelector((state) => state.orderCreate);
+    const { order, success, error } = orderCreate;
+
+    // const orderPay = useSelector((state) => state.orderPay);
+    // const { loading: loadingPay, success: successPay } = orderPay;
 
 
-    const handleSubmit = () => {
-        navigate('/orders');
+    useEffect(() => {
+        if (success) {
+            navigate(`/orders/${order._id}`)
+            dispatch({ type: ORDER_CREATE_RESET })
+        }
+    }, [navigate, dispatch, success, order]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("pay now");
+        dispatch(createOrder({
+            user: userInfo,
+            orderItems: cartItems,
+            shippingAddress: shippingAddress,
+            totalPrice: cartTotalPrice,
+        }));
+        // navigate('/orders');
     }
 
     return (
@@ -76,22 +100,17 @@ function Payment() {
                                         <h3>Order Total: {value}</h3>
                                     )}
                                     decimalScale={2}
-                                    value={cartTotal}
+                                    value={cartTotalPrice}
                                     displayType={"text"}
                                     thousandSeparator={true}
                                     prefix={" ₹ "}
                                 />
-
-                                <button>
+                                <button onClick={e => handleSubmit(e)}>
                                     <span>Buy Now</span>
                                 </button>
-                                {/* <button disabled={processing || disabled || succeeded}>
-                                    <span>{processing ? "Processing" : "Buy Now"}</span>
-                                </button> */}
                             </div>
 
-                            {/* Error div will show only in case of any error */}
-                            {/* {error && <div>{error}</div>} */}
+                            {error && <Error error={error} />}
                         </form>
                     </div>
                 </div>

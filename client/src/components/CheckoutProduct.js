@@ -5,7 +5,6 @@ import { addToCart, removeFromCart } from '../redux/actions/CartActions';
 import '../styles/CheckoutProduct.css';
 
 function CheckoutProduct({ id, title, price, rating, image, orderPageButton, paymentPageButton, subTotal, quantity, countInStock }) {
-
     const dispatch = useDispatch();
 
     const buttonType = orderPageButton === true ? "Buy it again" : "Delete";
@@ -28,20 +27,25 @@ function CheckoutProduct({ id, title, price, rating, image, orderPageButton, pay
                 </p>
                 <p className="checkoutProduct__price">
                     <small>₹ </small>
-                    <strong>{price}</strong>
+                    <strong>{`${price}`}</strong>
                 </p>
                 <div className="checkoutProduct__quantity">
-                    <p>Quantity</p>
-                    <select
-                        value={quantity}
-                        onChange={(e) => dispatch(addToCart(id, Number(e.target.value)))}
-                    >
-                        {!paymentPageButton ? [...Array(countInStock).keys()].map((x) => (
-                            <option key={x + 1} value={x + 1}>
-                                {x + 1}
-                            </option>
-                        )) : <option value={quantity} key={quantity}>{quantity}</option>}
-                    </select>
+                    <p><strong>Quantity</strong></p>
+                    {orderPageButton || paymentPageButton
+                        ? <>
+                            <strong>{`: ${quantity}`}</strong>
+                        </>
+                        :
+                        <select
+                            value={quantity}
+                            onChange={(e) => dispatch(addToCart(id, Number(e.target.value)))}
+                        >
+                            {[...Array(countInStock).keys()].map((x) => (
+                                <option key={x + 1} value={x + 1}>
+                                    {x + 1}
+                                </option>
+                            ))}
+                        </select>}
                 </div>
                 {!paymentPageButton ? (
                     <button className="checkoutProduct__button" onClick={() => removeFromCartHandler(id)}>{buttonType}</button>
