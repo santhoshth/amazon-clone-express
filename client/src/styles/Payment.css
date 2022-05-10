@@ -31,6 +31,12 @@
     flex: 0.2;
 }
 
+.payment__details {
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 20px;
+}
+
 .payment__content {
     flex: 0.8;
 }
@@ -46,10 +52,6 @@
 
 .payment__total>button {
     margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.payment__total>button {
     width: 100%;
     background: #ffd814;
     border: 1px solid #ffd814;

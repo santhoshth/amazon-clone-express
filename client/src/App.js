@@ -14,6 +14,11 @@ import Register from './screens/Register';
 import Account from './screens/Account';
 import Profile from './screens/Profile';
 import Shipping from './screens/Shipping';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+
+// stripe public key
+const stripePromise = loadStripe("pk_test_51KxVxUSGSdcNvrR9hr9VVKCOcI8hyhthnxdEvYxr0eCPTZ4JY8bQdLbideYnaqPilC6UOmeGfRFkGGGJZiXSaWCr00oGzEDBVK");
 
 function App() {
   return (
@@ -28,7 +33,14 @@ function App() {
           <Route path="/account" element={<><Header /><Account /><Footer /></>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/payment" element={<><Header /><Payment /></>} />
+          <Route path="/payment" element={
+            <>
+              <Header />
+              <Elements stripe={stripePromise}>
+                <Payment />
+              </Elements>
+            </>
+          } />
           <Route path="/cart/:id" element={<><Header /><Checkout /></>} />
           <Route path="/cart" element={<><Header /><Checkout /></>} />
           <Route path="/" element={<><Header /><Home /><Footer /></>} />

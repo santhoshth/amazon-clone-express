@@ -12,6 +12,7 @@ orderRoute.post("/", asyncHandler(
             orderItems,
             shippingAddress,
             totalPrice,
+            paymentIntent,
         } = req.body;
 
         if (orderItems && orderItems.length === 0) {
@@ -23,6 +24,7 @@ orderRoute.post("/", asyncHandler(
                 orderItems,
                 shippingAddress,
                 totalPrice,
+                paymentIntent,
             });
 
             const createOrder = await order.save()
@@ -30,6 +32,16 @@ orderRoute.post("/", asyncHandler(
         }
     }
 ));
+
+// GET USER LOGIN ORDER
+orderRoute.get("/", asyncHandler(
+    async (req, res) => {
+        const order = await Order.find({});
+        console.log(order);
+        res.json(order);
+    }
+));
+
 
 // GET ORDER BY ID
 orderRoute.get("/:id", asyncHandler(
@@ -49,28 +61,33 @@ orderRoute.get("/:id", asyncHandler(
 ));
 
 
-// ORDER IS PAID
-orderRoute.put("/:id/pay", asyncHandler(
-    async (req, res) => {
-        const order = await Order.findById(req.params.id)
 
-        if (order) {
-            order.isPaid = true;
-            order.paidAt = Date.now();
-            order.paymentResult = {
-                id: req.body.id,
-                status: req.body.status,
-                update_time: req.body.update_time,
-                email_address: req.body.email_address,
-            };
 
-            const updateOrder = await order.save();
-            res.json(updateOrder);
+// // ORDER IS PAID
+// orderRoute.put("/:id/pay", asyncHandler(
+//     async (req, res) => {
+//         const order = await Order.findById(req.params.id);
+//         console.log(order);
+//         console.log("order pay route is called");
 
-        } else {
-            res.status(404);
-            throw new Error("Order not found, so payment failed");
-        }
-    }
-));
+//         if (order) {
+//             order.isPaid = true;
+//             order.paidAt = Date.now();
+//             order.paymentResult = {
+//                 id: req.body.id,
+//                 status: req.body.status,
+//                 update_time: req.body.update_time,
+//                 email_address: req.body.email_address,
+//             };
+
+//             const updateOrder = await order.save();
+//             res.json(updateOrder);
+
+//         } else {
+//             res.status(404);
+//             throw new Error("Order not found, so payment failed");
+//         }
+//     }
+// ));
+
 export default orderRoute;

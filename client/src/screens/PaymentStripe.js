@@ -29,6 +29,7 @@ function Payment() {
     // const [clientSecret, setClientSecret] = useState(true);
 
 
+
     // // when ever the basket changes, client secret will be updated with the new total amount and hepls us to charge the the right amount from the customer
     // useEffect(() => {
     //     if (!user) {
@@ -167,12 +168,12 @@ function Payment() {
                                     prefix={" ₹"}
                                 />
 
-                                <button>
+                                {/* <button>
                                     <span>Buy Now</span>
-                                </button>
-                                {/* <button disabled={processing || disabled || succeeded}>
-                                    <span>{processing ? "Processing" : "Buy Now"}</span>
                                 </button> */}
+                                <button disabled={processing || disabled || succeeded}>
+                                    <span>{processing ? "Processing" : "Buy Now"}</span>
+                                </button>
                             </div>
 
                             {/* Error div will show only in case of any error */}
