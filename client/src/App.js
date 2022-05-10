@@ -16,6 +16,8 @@ import Profile from './screens/Profile';
 import Shipping from './screens/Shipping';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+import SearchProduct from './screens/SearchProduct';
+import NotFound from './screens/NotFound';
 
 // stripe public key
 const stripePromise = loadStripe("pk_test_51KxVxUSGSdcNvrR9hr9VVKCOcI8hyhthnxdEvYxr0eCPTZ4JY8bQdLbideYnaqPilC6UOmeGfRFkGGGJZiXSaWCr00oGzEDBVK");
@@ -26,6 +28,7 @@ function App() {
       <div className="app">
         <Routes>
           <Route path="/" element={<><Header /><Home /><Footer /></>} />
+          <Route path="/search/:keyword" element={<><Header /><SearchProduct /><Footer /></>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/products/:id" element={<><Header /><SingleProduct /><Footer /></>} />
@@ -46,6 +49,7 @@ function App() {
               </Elements>
             </>
           } />
+          <Route path="*" element={<><NotFound /></>} />
         </Routes>
       </div>
     </Router>

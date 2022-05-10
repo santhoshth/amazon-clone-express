@@ -4,30 +4,58 @@ import '../styles/SingleProduct.css';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import Rating from '../components/Rating';
 import { useDispatch, useSelector } from 'react-redux';
-import { listProductDetails } from '../redux/actions/ProductActions';
+import { createProductReview, listProductDetails } from '../redux/actions/ProductActions';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
+import { PRODUCT_CREATE_REVIEW_RESET } from '../redux/constants/ProductConstants';
 
 const SingleProduct = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
     const [quantity, setQuantity] = useState(1);
+    const [rating, setRating] = useState(0);
+    const [title, setTitle] = useState("");
+    const [comment, setComment] = useState("");
 
     const dispatch = useDispatch();
 
     const productDetails = useSelector((state) => state.productDetails);
     const { loading, error, product } = productDetails;
 
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+
+    const productReviewCreate = useSelector((state) => state.productReviewCreate);
+    const {
+        loading: loadingCreateReview,
+        error: errorCreateReview,
+        success: successCreateReview
+    } = productReviewCreate;
+
     useEffect(() => {
         dispatch(listProductDetails(id));
-    }, [dispatch, id]);
+        if (successCreateReview) {
+            alert("Review Submitted");
+            setRating(0);
+            setTitle("");
+            setComment("");
+            dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
+        }
+    }, [dispatch, id, successCreateReview]);
 
     const addToCartHandle = (e) => {
         e.preventDefault();
         navigate(`/cart/${id}?quantity=${quantity}`);
 
         console.log(`ADDED TO CART --- ${product.title}`);
+    }
+
+    const submitReview = (e) => {
+        e.preventDefault();
+        dispatch(createProductReview(id, {
+            rating, title, comment,
+        }))
     }
 
     return (
@@ -56,7 +84,7 @@ const SingleProduct = () => {
                                     </div>
                                     <div className="row">
                                         <p><Rating value={product.rating} /></p>
-                                        <strong>{product.numReviews} reviews</strong>
+                                        <strong>{product.numReviews}{product.numReviews > 1 ? " Reviews" : " Review"}</strong>
                                     </div>
                                     {product.countInStock > 0 ? (
                                         <>
@@ -87,64 +115,55 @@ const SingleProduct = () => {
                         </div>
                         <div className="bottom">
                             <div className="review">
-                                <h2>Reviews</h2>
-                                {product.reviews ? product.reviews.map(review =>
+                                <h2>{product.reviews.length > 0 ? "Reviews" : "Be the first one to Review"}</h2>
+                                {product.reviews.length > 0 ? product.reviews.map(review =>
                                     <Review
+                                        key={review._id}
                                         name={review.name}
                                         title={review.title}
                                         comment={review.comment}
                                         rating={review.rating}
-                                        date={review.date}
+                                        date={review.createdAt}
                                     />
                                 ) : null}
-                                <Review
-                                    name="Santhosh"
-                                    title="Best product"
-                                    comment="worth to buy this is one the best u can get in this price range worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang "
-                                    // date={12042022}
-                                    rating={5}
-                                />
-                                <Review
-                                    name="Santhosh"
-                                    title="Best product"
-                                    comment="worth to buy this is one the best u can get in this price range worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang worth to buy this is one the best u can get in this price rang "
-                                    // date={12042022}
-                                    rating={5}
-                                />
                             </div>
                             <div className="review__login">
                                 <h2>Write a Review</h2>
-                                {/* <form>
-                        <div className="my-4">
-                            <strong>Rating</strong>
-                            <select className="col-12 bg-light p-3 mt-2 border-0 rounded">
-                                <option value="">Select...</option>
-                                <option value="1">1 - Poor</option>
-                                <option value="2">2 - Fair</option>
-                                <option value="3">3 - Good</option>
-                                <option value="4">4 - Very Good</option>
-                                <option value="5">5 - Excellent</option>
-                            </select>
-                        </div>
-                        <div className="my-4">
-                            <strong>Comment</strong>
-                            <textarea
-                                row="3"
-                                className="col-12 bg-light p-3 mt-2 border-0 rounded"
-                            ></textarea>
-                        </div>
-                        <div className="my-3">
-                            <button className="col-12 bg-black border-0 p-3 rounded text-white">
-                                SUBMIT
-                            </button>
-                        </div>
-                    </form> */}
+                                {errorCreateReview ? <Error error={errorCreateReview} /> : null}
+                                {loadingCreateReview ? <Loading /> : null}
                                 <div className="review__login__element">
-                                    <p>Please
-                                        <Link className="link" to="/login">
-                                            <strong> Login </strong>
-                                        </Link>
-                                        to write a review</p>
+                                    {userInfo === null
+                                        ? <>
+                                            <p>Please
+                                                <Link className="link" to={`/login?redirect=/products/${id}`}>
+                                                    <strong> Login </strong>
+                                                </Link>
+                                                to write a review</p>
+                                        </>
+                                        : <>
+                                            <div className="rating__selector">
+                                                <p>Rating</p>
+                                                <select value={rating} onChange={(e) => setRating(e.target.value)}>
+                                                    <option value="">Select...</option>
+                                                    <option value="1">1 - Poor</option>
+                                                    <option value="2">2 - Fair</option>
+                                                    <option value="3">3 - Good</option>
+                                                    <option value="4">4 - Very Good</option>
+                                                    <option value="5">5 - Excellent</option>
+                                                </select>
+                                            </div>
+                                            <div className="title__input">
+                                                <p>Title</p>
+                                                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                                            </div>
+                                            <div className="comment__editor">
+                                                <p>Comment</p>
+                                                <textarea row="3" value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
+                                            </div>
+                                            <button disabled={loadingCreateReview} className="review__button" onClick={submitReview}>
+                                                Submit
+                                            </button>
+                                        </>}
                                 </div>
                             </div>
                         </div>

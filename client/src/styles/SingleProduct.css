@@ -113,7 +113,6 @@
 .review,
 .review__login {
     width: 100%;
-    /* border: 1px solid black; */
     margin: 20px;
     flex: 0.5;
 }
@@ -133,6 +132,8 @@
 }
 
 .review__login__element {
+    display: flex;
+    flex-direction: column;
     margin: 20px;
     padding: 20px;
     border-radius: 7px;
@@ -141,4 +142,79 @@
 
 .review__login__element>p {
     font-size: 20px;
+}
+
+.rating__selector>p,
+.comment__editor>p,
+.title__input>p {
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.rating__selector>select,
+.comment__editor>textarea,
+.title__input>input {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.rating__selector>select {
+    margin-left: 10px;
+    padding: 4px;
+    text-align: center;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+}
+
+.title__input>input {
+    margin-left: 10px;
+    padding: 4px;
+    width: 94%;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #e9e9ed;
+}
+
+
+.comment__editor>textarea {
+    margin-left: 10px;
+    padding: 4px;
+    width: 94%;
+    height: 60px;
+    border: none;
+    border-radius: 5px;
+    background-color: #e9e9ed;
+}
+
+
+.review__button {
+    background: #ffd814;
+    border: 1px solid #ffd814;
+    padding: 21px 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    color: black;
+    border-radius: 5px;
+    width: 30%;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.review__button:hover {
+    background: #f7ca00;
+    border-color: #f7ca00;
+}
+
+.review__button:active {
+    background: #ffd814;
+    border-color: #ffd814;
 }

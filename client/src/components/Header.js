@@ -2,12 +2,17 @@ import '../styles/Header.css';
 import logo from '../logo.jpg';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/actions/UserActions';
+import { useState } from 'react';
 
 function Header() {
+    const [keyword, setKeyword] = useState("");
+    let tempKeyword = "";
     const dispatch = useDispatch();
+
+    const navigate = useNavigate();
 
     const cart = useSelector((state) => state.cart);
     const { cartItems } = cart;
@@ -22,6 +27,17 @@ function Header() {
         console.log(`SIGN OUT --- ${userInfo.name}`);
     }
 
+    const searchHandle = (e) => {
+        e.preventDefault();
+        if (keyword.trim()) {
+            tempKeyword = keyword;
+            setKeyword("");
+            navigate(`/search/${tempKeyword}`);
+        } else {
+            navigate('/');
+        }
+    }
+
     return (
         <div className='header'>
             {/* Amazon Logo */}
@@ -31,9 +47,11 @@ function Header() {
 
             {/* Search bar with a input text field and search button */}
             <div className='header__search'>
-                <input type='text' className='header__searchInput' />
-                {/* Search Button using Material UI */}
-                <SearchIcon className='header__searchIcon'></SearchIcon>
+                <form onSubmit={searchHandle}>
+                    <input type='text' className='header__searchInput' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+                    {/* Search Button using Material UI */}
+                    <SearchIcon className='header__searchIcon' onClick={searchHandle}></SearchIcon>
+                </form>
             </div>
 
             {/* Header Navigation Icons like Sign in, Orders, Cart Navigation*/}

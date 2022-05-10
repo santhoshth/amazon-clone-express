@@ -13,7 +13,7 @@ function Account() {
         if (userInfo === null) {
             navigate("/login", { replace: true })
         }
-    }, [userInfo])
+    }, [userInfo, navigate])
 
     return (
         <div className="account__outer">

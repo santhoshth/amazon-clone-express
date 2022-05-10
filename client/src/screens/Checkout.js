@@ -47,7 +47,7 @@ const Checkout = () => {
                         <>
                             <div className="checkout__title">
                                 <h2>Shopping Cart</h2>
-                                <h2>Subtotal</h2>
+                                <h2>Price</h2>
                             </div>
                             {cartItems.map((cartItem) =>
                                 <CheckoutProduct

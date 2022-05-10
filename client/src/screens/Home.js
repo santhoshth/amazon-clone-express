@@ -6,16 +6,18 @@ import { listProduct } from '../redux/actions/ProductActions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from './../components/Loading';
 import Error from './../components/Error';
+import { useParams } from 'react-router-dom';
 
 function Home() {
     const dispatch = useDispatch();
+    const { keyword } = useParams();
 
     const productList = useSelector((state) => state.productList);
     const { loading, error, products } = productList;
 
     useEffect(() => {
-        dispatch(listProduct());
-    }, [dispatch]);
+        dispatch(listProduct(keyword));
+    }, [dispatch, keyword]);
 
     return (
         <>
@@ -25,13 +27,13 @@ function Home() {
                 <Error error={error} />
             ) : (
                 <>
-                    {products && <>
+                    {products ? <>
                         <Slider />
                         <CarouselSlider products={products.filter(p => p.category === "smartphones")} />
                         <CarouselSlider products={products.filter(p => p.category === "books")} />
                         <CarouselSlider products={products.filter(p => p.category === "gadgets")} />
                         <CarouselSlider products={products.filter(p => p.category === "others")} />
-                    </>}
+                    </> : null}
                 </>
             )}
         </>

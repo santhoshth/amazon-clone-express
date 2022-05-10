@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import CurrencyFormat from 'react-currency-format';
 import { useDispatch, useSelector } from 'react-redux';
 import { ORDER_CREATE_RESET } from '../redux/constants/OrderConstants';
-import { createOrder, payOrder } from './../redux/actions/OrderActions';
+import { createOrder } from './../redux/actions/OrderActions';
 import Error from './../components/Error';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import axios from 'axios';
@@ -70,6 +70,7 @@ function Payment() {
         e.preventDefault();
         setPayProcessing(true);
 
+        // eslint-disable-next-line
         const payload = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: elements.getElement(CardElement)
@@ -162,7 +163,8 @@ function Payment() {
                                     <span>{payProcessing ? "Processing..." : "Buy Now"}</span>
                                 </button>
                             </div>
-                            {error && <Error error={error} />}
+                            {error ? <Error error={error} /> : null}
+                            {payError ? <Error error={payError} /> : null}
                         </form>
                     </div>
                 </div>

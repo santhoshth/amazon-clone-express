@@ -27,7 +27,7 @@ function Profile() {
         if (userInfo === null) {
             navigate("/login", { replace: true })
         }
-    }, [userInfo])
+    }, [userInfo, navigate])
 
     const shippingHandler = (e) => {
         e.preventDefault();

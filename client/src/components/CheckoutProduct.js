@@ -1,16 +1,16 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { numberFormat } from '../NumberFormat';
 import { addToCart, removeFromCart } from '../redux/actions/CartActions';
 import '../styles/CheckoutProduct.css';
 
-function CheckoutProduct({ id, title, price, rating, image, orderPageButton, paymentPageButton, subTotal, quantity, countInStock }) {
+function CheckoutProduct({ id, title, price, image, orderPageButton, paymentPageButton, subTotal, quantity, countInStock, searchPageButton }) {
     const dispatch = useDispatch();
 
-    const buttonType = orderPageButton === true ? "Buy it again" : "Delete";
+    const buttonType = orderPageButton === true ? "Buy it again" : searchPageButton === true ? "Add to Cart" : "Delete";
 
     const removeFromCartHandler = (id) => {
-        // TO DO
         dispatch(removeFromCart(id));
         console.log(`${buttonType}d from Cart --- ${title}`);
     }
@@ -27,7 +27,7 @@ function CheckoutProduct({ id, title, price, rating, image, orderPageButton, pay
                 </p>
                 <p className="checkoutProduct__price">
                     <small>₹ </small>
-                    <strong>{`${price}`}</strong>
+                    <strong>{numberFormat(price)}</strong>
                 </p>
                 <div className="checkoutProduct__quantity">
                     <p><strong>Quantity</strong></p>
@@ -52,10 +52,12 @@ function CheckoutProduct({ id, title, price, rating, image, orderPageButton, pay
                 ) : null}
 
             </div>
-            <div className="checkoutProduct__subtotal">
-                <small>₹ </small>
-                <strong>{subTotal}</strong>
-            </div>
+            {searchPageButton ? null : (
+                <div className="checkoutProduct__subtotal">
+                    <small>₹ </small>
+                    <strong>{numberFormat(subTotal)}</strong>
+                </div>
+            )}
         </div>
     )
 }

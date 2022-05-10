@@ -32,7 +32,7 @@ function Orders() {
             }
             dispatch(getOrderListDetails());
         }
-    }, [userInfo, dispatch, id]);
+    }, [userInfo, navigate, dispatch, id]);
 
     return (
         <>  {id

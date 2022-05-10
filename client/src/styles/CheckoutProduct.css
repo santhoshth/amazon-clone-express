@@ -1,13 +1,13 @@
 .checkoutProduct {
     display: flex;
-    margin-bottom: 10px;
-    padding: 10px;
+    /* margin-bottom: 10px; */
+    padding: 20px;
     border-bottom: 1px solid lightgray;
 }
 
 .checkoutProduct__info {
     flex: 1;
-    padding-left: 10px;
+    padding-left: 30px;
 }
 
 .checkoutProduct__subtotal {
@@ -22,7 +22,7 @@
 }
 
 .checkoutProduct__price {
-    margin-top: 5px;
+    margin-top: 7px;
 }
 
 .checkoutProduct__image {
@@ -32,7 +32,7 @@
 }
 
 .checkoutProduct__quantity {
-    margin-top: 5px;
+    margin-top: 7px;
     display: flex;
 }
 
@@ -48,7 +48,7 @@
 .checkoutProduct__info>button {
     background: #ffd814;
     border: 1px solid #ffd814;
-    margin-top: 10px;
+    margin-top: 12px;
     padding: 21px 25px;
     padding-top: 7px;
     padding-bottom: 7px;

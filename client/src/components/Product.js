@@ -1,12 +1,16 @@
 import "../styles/Product.css";
 import { Link, useNavigate } from 'react-router-dom';
 import Rating from "./Rating";
+import { numberFormat } from "../NumberFormat";
 
 function Product({ id, title, price, rating, image, numReviews, countInStock, category, reviews }) {
 
     const navigate = useNavigate();
 
-    const addToCart = async () => {
+    const addToCart = (e) => {
+        e.preventDefault();
+        navigate(`/cart/${id}?quantity=1`);
+
         console.log(`ADDED TO CART --- ${title}`);
     }
 
@@ -23,7 +27,7 @@ function Product({ id, title, price, rating, image, numReviews, countInStock, ca
                 </Link>
                 <p className="product__price">
                     <small>₹</small>
-                    <strong>{price}</strong>
+                    <strong>{numberFormat(price)}</strong>
                 </p>
                 <div className="product__rating">
                     <Rating value={rating} />
