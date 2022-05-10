@@ -118,9 +118,12 @@ export const getOrderListDetails = () => async (dispatch, getState) => {
 
         const { data } = await axios.get(`/api/orders`, config);
 
-        console.log(data);
+        const filterOrders =
+            data
+                .filter((order) => order.user === userInfo._id)
+                .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
-        dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
+        dispatch({ type: ORDER_LIST_SUCCESS, payload: filterOrders });
 
     } catch (error) {
         const message = error.response && error.response.data.message ? error.response.data.message : error.message;

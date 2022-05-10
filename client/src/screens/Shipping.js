@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../styles/Profile.css';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,13 +14,20 @@ function Profile() {
     const cart = useSelector((state) => state.cart);
     const { shippingAddress } = cart;
 
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+
     const [name, setName] = useState(shippingAddress?.name);
     const [address, setAddress] = useState(shippingAddress?.address);
     const [city, setCity] = useState(shippingAddress?.city);
     const [pincode, setPincode] = useState(shippingAddress?.pincode);
     const [country, setCountry] = useState(shippingAddress?.country);
 
-
+    useEffect(() => {
+        if (userInfo === null) {
+            navigate("/login", { replace: true })
+        }
+    }, [userInfo])
 
     const shippingHandler = (e) => {
         e.preventDefault();

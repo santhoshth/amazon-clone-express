@@ -44,22 +44,25 @@ function Payment() {
 
 
     useEffect(() => {
-        // generate the special stripe secret which allows us to charge a customer
-        if (cartTotalPrice > 0) {
-            const getClientSecret = async () => {
-                const { data } = await axios.post(`api/payments/create?total=${cartTotalPrice * 100}`);
-                setClientSecret(data.clientSecret);
+        if (userInfo === null) {
+            navigate("/login", { replace: true });
+        } else {
+            // generate the special stripe secret which allows us to charge a customer
+            if (cartTotalPrice > 0) {
+                const getClientSecret = async () => {
+                    const { data } = await axios.post(`api/payments/create?total=${cartTotalPrice * 100}`);
+                    setClientSecret(data.clientSecret);
+                }
+
+                getClientSecret();
             }
 
-            getClientSecret();
+            if (success) {
+                navigate(`/orders/${order._id}`, { replace: true });
+                dispatch({ type: ORDER_CREATE_RESET })
+            }
         }
-
-        if (success) {
-            navigate(`/orders/${order._id}`, { replace: true });
-            dispatch({ type: ORDER_CREATE_RESET })
-        }
-
-    }, [cartTotalPrice, navigate, dispatch, success, order]);
+    }, [userInfo, cartTotalPrice, navigate, dispatch, success, order]);
 
     // console.log("secret key is", clientSecret);
 

@@ -1,8 +1,20 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Account.css';
 
 function Account() {
+    const navigate = useNavigate();
+
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+
+    useEffect(() => {
+        if (userInfo === null) {
+            navigate("/login", { replace: true })
+        }
+    }, [userInfo])
+
     return (
         <div className="account__outer">
             <div className="account">

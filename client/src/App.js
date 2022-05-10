@@ -25,14 +25,19 @@ function App() {
     <Router>
       <div className="app">
         <Routes>
+          <Route path="/" element={<><Header /><Home /><Footer /></>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/products/:id" element={<><Header /><SingleProduct /><Footer /></>} />
+          <Route path="/cart" element={<><Header /><Checkout /></>} />
+          <Route path="/cart/:id" element={<><Header /><Checkout /></>} />
+
+          {/* Private Routes only for Users */}
+          <Route path="/account" element={<><Header /><Account /><Footer /></>} />
+          <Route path="/profile" element={<><Header /><Profile /><Footer /></>} />
           <Route path="/orders/:id" element={<><Header /><Orders /></>} />
           <Route path="/orders" element={<><Header /><Orders /></>} />
           <Route path="/shipping" element={<><Header /><Shipping /><Footer /></>} />
-          <Route path="/profile" element={<><Header /><Profile /><Footer /></>} />
-          <Route path="/account" element={<><Header /><Account /><Footer /></>} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
           <Route path="/payment" element={
             <>
               <Header />
@@ -41,9 +46,6 @@ function App() {
               </Elements>
             </>
           } />
-          <Route path="/cart/:id" element={<><Header /><Checkout /></>} />
-          <Route path="/cart" element={<><Header /><Checkout /></>} />
-          <Route path="/" element={<><Header /><Home /><Footer /></>} />
         </Routes>
       </div>
     </Router>

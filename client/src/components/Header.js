@@ -50,7 +50,7 @@ function Header() {
                     </div>
                 </Link>
 
-                <Link className='link' to='/orders'>
+                <Link className='link' to={userInfo !== null ? '/orders' : '/login'}>
                     <div className='header__option'>
                         <span className='header__optionLineOne'>
                             Returns
