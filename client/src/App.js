@@ -34,7 +34,6 @@ function App() {
           <Route path="/products/:id" element={<><Header /><SingleProduct /><Footer /></>} />
           <Route path="/cart" element={<><Header /><Checkout /></>} />
           <Route path="/cart/:id" element={<><Header /><Checkout /></>} />
-
           {/* Private Routes only for Users */}
           <Route path="/account" element={<><Header /><Account /><Footer /></>} />
           <Route path="/profile" element={<><Header /><Profile /><Footer /></>} />

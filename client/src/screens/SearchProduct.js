@@ -1,5 +1,4 @@
 import '../styles/Orders.css';
-import Order from '../components/Order';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Error from '../components/Error';

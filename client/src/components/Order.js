@@ -1,42 +1,62 @@
 import moment from 'moment';
 import '../styles/Order.css';
 import CheckoutProduct from './CheckoutProduct';
-import CurrencyFormat from 'react-currency-format';
+import { numberFormat } from '../NumberFormat';
+import ReactHover, { Hover, Trigger } from 'react-hover';
+import { Link } from 'react-router-dom';
 
-function Order({ items, totalPrice, createdAt, id }) {
+function Order({ items, totalPrice, createdAt, id, shippingAddress }) {
+
+    const options = {
+        followCursor: false,
+        shiftX: 20,
+        shiftY: 0,
+    }
+
     return (
         <div className="order">
             <div className="order__header">
                 <div className="order__header__left">
-                    <CurrencyFormat
-                        renderText={(value) => (
-                            <p className="order__total">TOTAL<p>{value}</p></p>
-                        )}
-                        decimalScale={2}
-                        // value={order.data.amount / 100}
-                        value={totalPrice}
-                        displayType={"text"}
-                        thousandSeparator={true}
-                        prefix={"₹"}
-                        className="order__total"
-                    />
-                    <p className="order__date">
+                    <div className="order__date">
                         ORDER PLACED:
                         <p>{moment(createdAt).format("DD MMMM YYYY")}</p>
-                    </p>
+                    </div>
+                    <div className="order__total">
+                        TOTAL
+                        <p><small>₹ </small>{numberFormat(totalPrice)}</p>
+                    </div>
+                    <div className="order__ship">
+                        SHIP TO:
+                        <ReactHover options={options}>
+                            <Trigger type="trigger">
+                                <p className="order__shipTo__name">{shippingAddress?.name}</p>
+                            </Trigger>
+                            <Hover type="hover">
+                                <div className="hover__data">
+                                    <p style={{ fontWeight: "700" }}>{shippingAddress?.name}</p>
+                                    <p>{shippingAddress?.address}</p>
+                                    <p>{shippingAddress?.city}</p>
+                                    <p>{shippingAddress?.pincode}</p>
+                                    <p>{shippingAddress?.country}</p>
+                                </div>
+                            </Hover>
+                        </ReactHover>
+                    </div>
                 </div>
                 <div className="order__header__right">
-                    <p className="order__id">
-                        ORDER #
-                        <small>{id}</small>
-                    </p>
+                    <Link style={{ textDecoration: 'none' }} to={`/orders/${id}`}>
+                        <p className="order__id">
+                            ORDER #
+                            <small className="order__id__color">{id}</small>
+                        </p>
+                    </Link>
                 </div>
             </div>
-
             <div className="order__items">
                 {items?.map(item => (
                     <CheckoutProduct
-                        id={item.id}
+                        key={item.product}
+                        id={item.product}
                         title={item.title}
                         price={item.price}
                         image={item.image}
@@ -46,7 +66,6 @@ function Order({ items, totalPrice, createdAt, id }) {
                     />
                 ))}
             </div>
-
         </div>
     )
 }

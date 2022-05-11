@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import '../styles/Payment.css'
 import CheckoutProduct from '../components/CheckoutProduct';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,7 +9,6 @@ import { ORDER_CREATE_RESET } from '../redux/constants/OrderConstants';
 import { createOrder } from './../redux/actions/OrderActions';
 import Error from './../components/Error';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import axios from 'axios';
 
 function Payment() {
 
@@ -21,7 +21,7 @@ function Payment() {
     const [payProcessing, setPayProcessing] = useState(false);
     const [paySucceeded, setPaySucceeded] = useState(false);
 
-    const [clientSecret, setClientSecret] = useState(true);
+    const [clientSecret, setClientSecret] = useState("");
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -39,10 +39,6 @@ function Payment() {
     const orderCreate = useSelector((state) => state.orderCreate);
     const { order, success, error } = orderCreate;
 
-    // const orderPay = useSelector((state) => state.orderPay);
-    // const { loading: loadingPay, success: successPay } = orderPay;
-
-
     useEffect(() => {
         if (userInfo === null) {
             navigate("/login", { replace: true });
@@ -53,7 +49,6 @@ function Payment() {
                     const { data } = await axios.post(`api/payments/create?total=${cartTotalPrice * 100}`);
                     setClientSecret(data.clientSecret);
                 }
-
                 getClientSecret();
             }
 
@@ -63,8 +58,6 @@ function Payment() {
             }
         }
     }, [userInfo, cartTotalPrice, navigate, dispatch, success, order]);
-
-    // console.log("secret key is", clientSecret);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -77,13 +70,13 @@ function Payment() {
             }
         }).then(({ paymentIntent }) => {
             // paymentIntent means payment confirmation
-            console.log(paymentIntent);
+            // console.log(paymentIntent);
 
             setPaySucceeded(true);
             setPayError(null);
             setPayProcessing(false);
 
-            console.log("payment is success");
+            // console.log("payment is success");
 
             dispatch(createOrder({
                 user: userInfo,
@@ -103,73 +96,74 @@ function Payment() {
     }
 
     return (
-        <div className="payment">
-            <div className="payment__container">
-                <h2>Checkout (<Link to={'/cart'}>{cartTotalQuantiy}</Link>)</h2>
-                <div className="payment__section">
-                    <div className="payment__title">
-                        <h3>Delivery Address</h3>
+        <>
+            <div className="payment">
+                <div className="payment__container">
+                    <h2>Checkout (<Link to={'/cart'}>{cartTotalQuantiy}</Link>)</h2>
+                    <div className="payment__section">
+                        <div className="payment__title">
+                            <h3>Delivery Address</h3>
+                        </div>
+                        <div className="payment__content">
+                            <p>{shippingAddress?.name}</p>
+                            <p>{shippingAddress?.address}</p>
+                            <p>{shippingAddress?.city}</p>
+                            <p>{shippingAddress?.pincode}</p>
+                            <p>{shippingAddress?.country}</p>
+                        </div>
                     </div>
-                    <div className="payment__content">
-                        <p>{shippingAddress.name}</p>
-                        <p>{shippingAddress.address}</p>
-                        <p>{shippingAddress.city}</p>
-                        <p>{shippingAddress.pincode}</p>
-                        <p>{shippingAddress.country}</p>
-                    </div>
-                </div>
 
-                <div className="payment__section">
-                    <div className="payment__title">
-                        <h3>Review Items and Delivery</h3>
-                    </div>
-                    <div className="payment__content">
-                        {cartItems.map((cartItem) => (
-                            <CheckoutProduct
-                                key={cartItem.product}
-                                id={cartItem.product}
-                                title={cartItem.title}
-                                price={cartItem.price}
-                                subTotal={cartItem.subTotal}
-                                image={cartItem.image}
-                                quantity={cartItem.quantity}
-                                countInStock={cartItem.countInStock}
-                                paymentPageButton={true}
-                            />
-                        ))}
-                    </div>
-                </div>
-
-                <div className="payment__card__section">
-                    <div className="payment__title">
-                        <h3>Payment Method</h3>
-                    </div>
-                    <div className="payment__details">
-                        <h4>Card Details</h4>
-                        <form onSubmit={handleSubmit}>
-                            <CardElement className="payment__card" onChange={handleChange} />
-                            <div className="payment__total">
-                                <CurrencyFormat
-                                    renderText={(value) => (
-                                        <h3>Order Total: {value}</h3>
-                                    )}
-                                    decimalScale={2}
-                                    value={cartTotalPrice}
-                                    displayType={"text"}
-                                    thousandSeparator={true}
-                                    prefix={" ₹ "}
+                    <div className="payment__section">
+                        <div className="payment__title">
+                            <h3>Review Items and Delivery</h3>
+                        </div>
+                        <div className="payment__content">
+                            {cartItems?.map((cartItem) => (
+                                <CheckoutProduct
+                                    key={cartItem?.product}
+                                    id={cartItem?.product}
+                                    title={cartItem?.title}
+                                    price={cartItem?.price}
+                                    subTotal={cartItem?.subTotal}
+                                    image={cartItem?.image}
+                                    quantity={cartItem?.quantity}
+                                    countInStock={cartItem?.countInStock}
+                                    paymentPageButton={true}
                                 />
-                                <button disabled={payProcessing || payDisabled || paySucceeded}>
-                                    <span>{payProcessing ? "Processing..." : "Buy Now"}</span>
-                                </button>
-                            </div>
-                            {error ? <Error error={error} /> : null}
-                            {payError ? <Error error={payError} /> : null}
-                        </form>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="payment__card__section">
+                        <div className="payment__title">
+                            <h3>Payment Method</h3>
+                        </div>
+                        <div className="payment__details">
+                            <h4>Card Details</h4>
+                            <form onSubmit={handleSubmit}>
+                                <CardElement className="payment__card" onChange={handleChange} />
+                                <div className="payment__total">
+                                    <CurrencyFormat
+                                        renderText={(value) => (
+                                            <h3>Order Total: {value}</h3>
+                                        )}
+                                        decimalScale={2}
+                                        value={cartTotalPrice}
+                                        displayType={"text"}
+                                        thousandSeparator={true}
+                                        prefix={" ₹ "}
+                                    />
+                                    <button disabled={payProcessing || payDisabled || paySucceeded || cartItems?.length === 0}>
+                                        <span>{payProcessing ? "Processing..." : "Buy Now"}</span>
+                                    </button>
+                                </div>
+                                {error ? <Error error={error} /> : null}
+                                {payError ? <Error error={payError} /> : null}
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

@@ -8,17 +8,17 @@ const NotFound = () => {
     <>
       <Header />
       <div className="notfound">
-        <h4 className="notfound__heading">Page Not Found</h4>
+        <h2 className="notfound__heading">Page Not Found</h2>
         <img
           style={{ width: "100%", height: "300px", objectFit: "contain" }}
           src="https://freefrontend.com/assets/img/html-css-404-page-templates/HTML-404-Page-with-SVG.png"
           alt="Not-found"
         />
-        <button className="notfound__button">
-          <Link to="/" className="text-white text-decoration-none">
+        <Link to="/" className="link">
+          <button className="notfound__button">
             Home page
-          </Link>
-        </button>
+          </button>
+        </Link>
       </div>
     </>
   );

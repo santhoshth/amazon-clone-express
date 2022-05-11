@@ -8,12 +8,20 @@ const productRoute = express.Router();
 // GET ALL PRODUCTS
 productRoute.get("/", asyncHandler(
     async (req, res) => {
-
+        // 2 field regex
+        // based on title and category field
         const keyword = req.query.keyword ? {
-            title: {
-                $regex: req.query.keyword,
-                $options: "i"
-            },
+            $or: [{
+                title: {
+                    $regex: req.query.keyword,
+                    $options: "i"
+                }
+            }, {
+                category: {
+                    $regex: req.query.keyword,
+                    $options: "i"
+                }
+            }]
         }
             : {}
         const products = await Product.find({ ...keyword });
@@ -61,7 +69,6 @@ productRoute.post("/:id/review", protect, asyncHandler(
             product.numReviews = product.reviews.length;
             product.rating = product.reviews.reduce((acc, item) => item.rating + acc, 0) /
                 product.reviews.length;
-
 
             await product.save();
             res.status(201).json({ message: "Review Added" });

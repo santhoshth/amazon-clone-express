@@ -20,11 +20,11 @@ function Header() {
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
 
-    const cartItemsCount = cartItems.length === 0 ? 0 : cartItems.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
+    const cartItemsCount = cartItems?.length === 0 ? 0 : cartItems?.map(item => item.quantity).reduce((prev, curr) => prev + curr, 0);
 
     const signOut = () => {
         dispatch(logout());
-        console.log(`SIGN OUT --- ${userInfo.name}`);
+        // console.log(`SIGN OUT --- ${userInfo.name}`);
     }
 
     const searchHandle = (e) => {

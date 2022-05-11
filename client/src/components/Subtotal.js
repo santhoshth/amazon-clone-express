@@ -1,6 +1,5 @@
 import React from 'react'
 import '../styles/Subtotal.css'
-import CurrencyFormat from 'react-currency-format';
 import { useNavigate } from 'react-router-dom';
 import { numberFormat } from '../NumberFormat';
 
@@ -19,24 +18,6 @@ function Subtotal({ total, itemCount }) {
 
     return (
         <div className="subtotal">
-            {/* <CurrencyFormat
-                renderText={(value) => (
-                    <>
-                        <p className="subtotal__count">
-                            Subtotal ({`${itemCount} ${item}`}):<strong className="subtotal__total">{`${value}`}</strong>
-                        </p>
-                        <small className="subtotal__gift">
-                            <input type="checkbox" />
-                            <p> This order contains a gift</p>
-                        </small>
-                    </>
-                )}
-                // decimalScale={2}
-                value={total}
-                displayType={"text"}
-                thousandSeparator={true}
-                prefix={" ₹"}
-            /> */}
             <p className="subtotal__count">
                 Subtotal ({`${itemCount} ${item}`}):<strong className="subtotal__total">{` ₹ ${numberFormat(total)}`}</strong>
             </p>

@@ -112,9 +112,7 @@ function Profile() {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                         <button className="edit__button__shipping" onClick={e => shippingHandler(e)}>Continue</button>
                     </div>
                 </div>

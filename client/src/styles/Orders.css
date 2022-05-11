@@ -2,11 +2,19 @@
     background-color: white;
     padding: 20px 80px;
     max-width: 1600px;
-
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 100vh;
 }
 
 .orders>h1 {
     margin-left: 220px;
+}
+
+.orders__nav_title {
+    width: 950px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .search {

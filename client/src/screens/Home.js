@@ -29,10 +29,10 @@ function Home() {
                 <>
                     {products ? <>
                         <Slider />
-                        <CarouselSlider products={products.filter(p => p.category === "smartphones")} />
-                        <CarouselSlider products={products.filter(p => p.category === "books")} />
-                        <CarouselSlider products={products.filter(p => p.category === "gadgets")} />
-                        <CarouselSlider products={products.filter(p => p.category === "others")} />
+                        <CarouselSlider key={"smartphones"} products={products.filter(p => p.category === "smartphones")} />
+                        <CarouselSlider key={"books"} products={products.filter(p => p.category === "books")} />
+                        <CarouselSlider key={"gadgets"} products={products.filter(p => p.category === "gadgets")} />
+                        <CarouselSlider key={"others"} products={products.filter(p => p.category === "others")} />
                     </> : null}
                 </>
             )}

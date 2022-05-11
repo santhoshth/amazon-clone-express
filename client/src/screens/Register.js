@@ -7,6 +7,7 @@ import Error from '../components/Error';
 
 function Register() {
     window.scrollTo(0, 0);
+
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -58,12 +59,7 @@ function Register() {
                         </Link>
                     </p>
                 </p>
-
-                {/* <p className="login__registerTitle">New to Amazon?</p>
-                <button className="login__registerButton" onClick={e => register(e)}>Create your Amazon account</button> */}
             </div>
-
-
         </div>
     )
 }

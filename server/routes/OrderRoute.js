@@ -37,7 +37,6 @@ orderRoute.post("/", asyncHandler(
 orderRoute.get("/", asyncHandler(
     async (req, res) => {
         const order = await Order.find({});
-        console.log(order);
         res.json(order);
     }
 ));

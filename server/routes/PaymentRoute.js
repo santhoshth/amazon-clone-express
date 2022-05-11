@@ -11,7 +11,7 @@ paymentRoute.post('/create', asyncHandler(
 
         const total = req.query.total;
 
-        console.log("Payment request received BOOM!! ", total);
+        // console.log("Payment request received BOOM!! ", total);
 
         const paymentIntent = await stripe.paymentIntents.create({
             amount: total,

@@ -1,14 +1,16 @@
 import '../styles/Orders.css';
 import Order from '../components/Order';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Error from './../components/Error';
 import { getOrderDetails, getOrderListDetails } from './../redux/actions/OrderActions';
 import { useEffect } from 'react';
 import Loading from './../components/Loading';
-
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
 function Orders() {
+    window.scrollTo(0, 0);
+
     const { id } = useParams();
 
     const dispatch = useDispatch();
@@ -35,26 +37,60 @@ function Orders() {
     }, [userInfo, navigate, dispatch, id]);
 
     return (
-        <>  {id
-            ? <>
-                <div className="orders">
-                    <h1>Your Order</h1>
-                    <Order items={order?.orderItems} totalPrice={order?.totalPrice} createdAt={order?.createdAt} id={order?._id} />
-                    {loading && <Loading />}
-                    {error && <Error error={error} />}
+        <>
+            <div className="orders">
+                <div className="orders__nav_title">
+                    {id
+                        ?
+                        <>
+                            <p className="profile__title">Order Details</p>
+                        </>
+                        :
+                        <>
+                            <div className="profile__nav">
+                                <Link style={{ textDecoration: 'none' }} to="/account">
+                                    <p className="profile__account">Your Account</p>
+                                </Link>
+                                <ArrowRightIcon className="arrow__icon" fontSize='small' />
+                                <span>Orders</span>
+                            </div>
+                            <p className="profile__title">Your Orders ({orders?.length})</p>
+                            {orders?.length === 0 ?
+                                <Link to="/" className="link">
+                                    <p className="profile__title">No Orders Placed. Shop Now</p>
+                                </Link>
+                                : null}
+                        </>
+                    }
                 </div>
-            </>
-            : <>
-                <div className="orders">
-                    <h1>Your Orders ({orders?.length})</h1>
-                    {orders?.map(order =>
-                        <Order key={order?._id} items={order?.orderItems} totalPrice={order?.totalPrice} createdAt={order?.createdAt} id={order?._id} />
-                    )}
-                    {loadingOrders && <Loading />}
-                    {errorOrders && <Error error={errorOrders} />}
-                </div>
-            </>}
-
+                {id
+                    ? <>
+                        <Order
+                            items={order?.orderItems}
+                            totalPrice={order?.totalPrice}
+                            createdAt={order?.createdAt}
+                            id={order?._id}
+                            shippingAddress={order?.shippingAddress}
+                        />
+                        {loading && <Loading />}
+                        {error && <Error error={error} />}
+                    </>
+                    :
+                    <>
+                        {orders?.length > 0 ? orders?.map(order =>
+                            <Order
+                                key={order?._id}
+                                items={order?.orderItems}
+                                totalPrice={order?.totalPrice}
+                                createdAt={order?.createdAt}
+                                id={order?._id}
+                                shippingAddress={order?.shippingAddress} />
+                        ) : null}
+                        {loadingOrders && <Loading />}
+                        {errorOrders && <Error error={errorOrders} />}
+                    </>
+                }
+            </div>
         </>
     )
 }

@@ -18,18 +18,13 @@ function Profile() {
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
 
-    // const userDetails = useSelector((state) => state.userDetails);
-    // const { loading, error, user } = userDetails;
-
     const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
     const { error } = userUpdateProfile;
-
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-
 
     useEffect(() => {
         if (userInfo === null) {
@@ -63,7 +58,7 @@ function Profile() {
                 if (name === userInfo?.name && email === userInfo?.email) {
                     notify("No changes are made", "error");
                 } else if (name === userInfo?.name && email !== userInfo?.email) {
-                    dispatch(updateUserProfile({ id: userInfo._id, email }));
+                    dispatch(updateUserProfile({ id: userInfo?._id, email }));
                     notify("Email Updated", "success");
                 } else if (name !== userInfo?.name && email === userInfo?.email) {
                     dispatch(updateUserProfile({ id: userInfo?._id, name }));

@@ -3,15 +3,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import Rating from "./Rating";
 import { numberFormat } from "../NumberFormat";
 
-function Product({ id, title, price, rating, image, numReviews, countInStock, category, reviews }) {
+function Product({ id, title, price, rating, image }) {
 
     const navigate = useNavigate();
 
     const addToCart = (e) => {
         e.preventDefault();
         navigate(`/cart/${id}?quantity=1`);
-
-        console.log(`ADDED TO CART --- ${title}`);
+        // console.log(`ADDED TO CART --- ${title}`);
     }
 
     const toProduct = () => {
@@ -33,9 +32,7 @@ function Product({ id, title, price, rating, image, numReviews, countInStock, ca
                     <Rating value={rating} />
                 </div>
             </div>
-
             <img src={image} onClick={toProduct} alt="product__image" />
-
             <button className="product__button" onClick={addToCart}>Add to Cart</button>
         </div >
     )

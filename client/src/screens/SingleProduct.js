@@ -8,6 +8,7 @@ import { createProductReview, listProductDetails } from '../redux/actions/Produc
 import Loading from '../components/Loading';
 import Error from '../components/Error';
 import { PRODUCT_CREATE_REVIEW_RESET } from '../redux/constants/ProductConstants';
+import { ToastContainer, toast } from 'react-toastify';
 
 const SingleProduct = () => {
     const { id } = useParams();
@@ -36,7 +37,7 @@ const SingleProduct = () => {
     useEffect(() => {
         dispatch(listProductDetails(id));
         if (successCreateReview) {
-            alert("Review Submitted");
+            toast.success("Review Submitted");
             setRating(0);
             setTitle("");
             setComment("");
@@ -47,8 +48,6 @@ const SingleProduct = () => {
     const addToCartHandle = (e) => {
         e.preventDefault();
         navigate(`/cart/${id}?quantity=${quantity}`);
-
-        console.log(`ADDED TO CART --- ${product.title}`);
     }
 
     const submitReview = (e) => {
@@ -60,12 +59,15 @@ const SingleProduct = () => {
 
     return (
         <>
-            {loading ? (
-                <Loading />
-            ) : error ? (
-                <Error error={error} />
-            ) : (
-                <>
+            <ToastContainer
+                style={{ marginTop: "50px" }}
+                pauseOnHover={false}
+                pauseOnFocusLoss={false}
+                draggable={false}
+                autoClose={1000}
+            />
+            {loading ? (<Loading />) : error ? (<Error error={error} />)
+                : (<>
                     <div className="single__product">
                         <div className="top">
                             <div className="product__image">
@@ -140,7 +142,8 @@ const SingleProduct = () => {
                                                 </Link>
                                                 to write a review</p>
                                         </>
-                                        : <>
+                                        :
+                                        <>
                                             <div className="rating__selector">
                                                 <p>Rating</p>
                                                 <select value={rating} onChange={(e) => setRating(e.target.value)}>
@@ -163,12 +166,14 @@ const SingleProduct = () => {
                                             <button disabled={loadingCreateReview} className="review__button" onClick={submitReview}>
                                                 Submit
                                             </button>
-                                        </>}
+                                        </>
+                                    }
                                 </div>
                             </div>
                         </div>
                     </div>
-                </>)}
+                </>)
+            }
         </>
     )
 }

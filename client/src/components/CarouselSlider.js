@@ -36,24 +36,19 @@ function CarouselSlider({ products }) {
                 autoPlaySpeed={1000000}
             >
                 {
-                    products.map(product => {
+                    products?.map(product => {
                         return (
                             <Product
-                                key={product._id}
-                                id={product._id}
-                                title={product.title}
-                                price={product.price}
-                                rating={product.rating}
-                                image={product.image}
-                                numReviews={product.numReviews}
-                                category={product.category}
-                                countInStock={product.countInStock}
-                                reviews={product.reviews}
+                                key={product?._id}
+                                id={product?._id}
+                                title={product?.title}
+                                price={product?.price}
+                                rating={product?.rating}
+                                image={product?.image}
                             />
                         );
                     })
                 }
-
             </Carousel>
         </div>
     )
