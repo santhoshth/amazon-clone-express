@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loading from './../components/Loading';
 import Error from './../components/Error';
 import { useParams } from 'react-router-dom';
+import Footer from './../components/Footer';
 
 function Home() {
     const dispatch = useDispatch();
@@ -27,13 +28,17 @@ function Home() {
                 <Error error={error} />
             ) : (
                 <>
-                    {products ? <>
-                        <Slider />
-                        <CarouselSlider key={"smartphones"} products={products.filter(p => p.category === "smartphones")} />
-                        <CarouselSlider key={"books"} products={products.filter(p => p.category === "books")} />
-                        <CarouselSlider key={"gadgets"} products={products.filter(p => p.category === "gadgets")} />
-                        <CarouselSlider key={"others"} products={products.filter(p => p.category === "others")} />
-                    </> : null}
+                    {products
+                        ?
+                        <>
+                            <Slider />
+                            <CarouselSlider key={"smartphones"} products={products.filter(p => p.category === "smartphones")} />
+                            <CarouselSlider key={"books"} products={products.filter(p => p.category === "books")} />
+                            <CarouselSlider key={"gadgets"} products={products.filter(p => p.category === "gadgets")} />
+                            <CarouselSlider key={"others"} products={products.filter(p => p.category === "others")} />
+                            <Footer />
+                        </>
+                        : null}
                 </>
             )}
         </>

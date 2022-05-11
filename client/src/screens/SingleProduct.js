@@ -9,13 +9,16 @@ import Loading from '../components/Loading';
 import Error from '../components/Error';
 import { PRODUCT_CREATE_REVIEW_RESET } from '../redux/constants/ProductConstants';
 import { ToastContainer, toast } from 'react-toastify';
+import Footer from '../components/Footer';
 
 const SingleProduct = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
+    const toastId = React.useRef(null);
+
     const [quantity, setQuantity] = useState(1);
-    const [rating, setRating] = useState(0);
+    const [rating, setRating] = useState("");
     const [title, setTitle] = useState("");
     const [comment, setComment] = useState("");
 
@@ -28,17 +31,13 @@ const SingleProduct = () => {
     const { userInfo } = userLogin;
 
     const productReviewCreate = useSelector((state) => state.productReviewCreate);
-    const {
-        loading: loadingCreateReview,
-        error: errorCreateReview,
-        success: successCreateReview
-    } = productReviewCreate;
+    const { loading: loadingCreateReview, error: errorCreateReview, success: successCreateReview } = productReviewCreate;
 
     useEffect(() => {
         dispatch(listProductDetails(id));
         if (successCreateReview) {
             toast.success("Review Submitted");
-            setRating(0);
+            setRating("");
             setTitle("");
             setComment("");
             dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
@@ -52,9 +51,15 @@ const SingleProduct = () => {
 
     const submitReview = (e) => {
         e.preventDefault();
-        dispatch(createProductReview(id, {
-            rating, title, comment,
-        }))
+        if (rating !== "") {
+            dispatch(createProductReview(id, {
+                rating, title, comment,
+            }))
+        } else {
+            if (!toast.isActive(toastId.current)) {
+                toastId.current = toast.error("Select rating");
+            }
+        }
     }
 
     return (
@@ -131,47 +136,48 @@ const SingleProduct = () => {
                             </div>
                             <div className="review__login">
                                 <h2>Write a Review</h2>
-                                {errorCreateReview ? <Error error={errorCreateReview} /> : null}
-                                {loadingCreateReview ? <Loading /> : null}
-                                <div className="review__login__element">
-                                    {userInfo === null
-                                        ? <>
-                                            <p>Please
-                                                <Link className="link" to={`/login?redirect=/products/${id}`}>
-                                                    <strong> Login </strong>
-                                                </Link>
-                                                to write a review</p>
-                                        </>
-                                        :
-                                        <>
-                                            <div className="rating__selector">
-                                                <p>Rating</p>
-                                                <select value={rating} onChange={(e) => setRating(e.target.value)}>
-                                                    <option value="">Select...</option>
-                                                    <option value="1">1 - Poor</option>
-                                                    <option value="2">2 - Fair</option>
-                                                    <option value="3">3 - Good</option>
-                                                    <option value="4">4 - Very Good</option>
-                                                    <option value="5">5 - Excellent</option>
-                                                </select>
-                                            </div>
-                                            <div className="title__input">
-                                                <p>Title</p>
-                                                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-                                            </div>
-                                            <div className="comment__editor">
-                                                <p>Comment</p>
-                                                <textarea row="3" value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
-                                            </div>
-                                            <button disabled={loadingCreateReview} className="review__button" onClick={submitReview}>
-                                                Submit
-                                            </button>
-                                        </>
-                                    }
-                                </div>
+                                {loadingCreateReview ? <Loading /> : errorCreateReview ? <Error error={`${errorCreateReview}. Please Reload the page`} /> :
+                                    <div className="review__login__element">
+                                        {userInfo === null
+                                            ? <>
+                                                <p>Please
+                                                    <Link className="link" to={`/login?redirect=/products/${id}`}>
+                                                        <strong> Login </strong>
+                                                    </Link>
+                                                    to write a review</p>
+                                            </>
+                                            :
+                                            <>
+                                                <div className="rating__selector">
+                                                    <p>Rating</p>
+                                                    <select value={rating} onChange={(e) => setRating(e.target.value)}>
+                                                        <option value="">Select...</option>
+                                                        <option value="1">1 - Poor</option>
+                                                        <option value="2">2 - Fair</option>
+                                                        <option value="3">3 - Good</option>
+                                                        <option value="4">4 - Very Good</option>
+                                                        <option value="5">5 - Excellent</option>
+                                                    </select>
+                                                </div>
+                                                <div className="title__input">
+                                                    <p>Title</p>
+                                                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                                                </div>
+                                                <div className="comment__editor">
+                                                    <p>Comment</p>
+                                                    <textarea row="3" value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
+                                                </div>
+                                                <button disabled={loadingCreateReview} className="review__button" onClick={submitReview}>
+                                                    Submit
+                                                </button>
+                                            </>
+                                        }
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
+                    <Footer />
                 </>)
             }
         </>

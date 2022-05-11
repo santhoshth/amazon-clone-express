@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUserProfile } from '../redux/actions/UserActions';
 import { ToastContainer, toast } from 'react-toastify';
 import Error from '../components/Error';
+import Footer from '../components/Footer';
 
 function Profile() {
     window.scrollTo(0, 0);

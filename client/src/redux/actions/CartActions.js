@@ -1,10 +1,11 @@
 import axios from "axios"
+import URL from "../../Url";
 import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING_ADDRESS } from "../constants/CartConstants"
 
 // ADD TO CART
 export const addToCart = (id, quantity) => async (dispatch, getState) => {
 
-    const { data } = await axios.get(`/api/products/${id}`);
+    const { data } = await axios.get(`${URL}/api/products/${id}`);
 
     const totalPriceOfProduct = data.price * quantity;
 

@@ -27,19 +27,19 @@ function App() {
     <Router>
       <div className="app">
         <Routes>
-          <Route path="/" element={<><Header /><Home /><Footer /></>} />
-          <Route path="/search/:keyword" element={<><Header /><SearchProduct /><Footer /></>} />
+          <Route path="/" element={<><Header /><Home /></>} />
+          <Route path="/search/:keyword" element={<><Header /><SearchProduct /></>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/products/:id" element={<><Header /><SingleProduct /><Footer /></>} />
+          <Route path="/products/:id" element={<><Header /><SingleProduct /></>} />
           <Route path="/cart" element={<><Header /><Checkout /></>} />
           <Route path="/cart/:id" element={<><Header /><Checkout /></>} />
           {/* Private Routes only for Users */}
-          <Route path="/account" element={<><Header /><Account /><Footer /></>} />
-          <Route path="/profile" element={<><Header /><Profile /><Footer /></>} />
+          <Route path="/account" element={<><Header /><Account /></>} />
+          <Route path="/profile" element={<><Header /><Profile /></>} />
           <Route path="/orders/:id" element={<><Header /><Orders /></>} />
           <Route path="/orders" element={<><Header /><Orders /></>} />
-          <Route path="/shipping" element={<><Header /><Shipping /><Footer /></>} />
+          <Route path="/shipping" element={<><Header /><Shipping /></>} />
           <Route path="/payment" element={
             <>
               <Header />

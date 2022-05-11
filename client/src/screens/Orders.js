@@ -20,7 +20,7 @@ function Orders() {
     const { order, error, loading } = orderDetails;
 
     const orderList = useSelector((state) => state.orderList);
-    const { orders, loadingOrders, errorOrders } = orderList;
+    const { orders, loading: loadingOrders, error: errorOrders } = orderList;
 
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
@@ -37,61 +37,57 @@ function Orders() {
     }, [userInfo, navigate, dispatch, id]);
 
     return (
-        <>
-            <div className="orders">
-                <div className="orders__nav_title">
-                    {id
-                        ?
-                        <>
-                            <p className="profile__title">Order Details</p>
-                        </>
-                        :
-                        <>
-                            <div className="profile__nav">
-                                <Link style={{ textDecoration: 'none' }} to="/account">
-                                    <p className="profile__account">Your Account</p>
-                                </Link>
-                                <ArrowRightIcon className="arrow__icon" fontSize='small' />
-                                <span>Orders</span>
-                            </div>
-                            <p className="profile__title">Your Orders ({orders?.length})</p>
-                            {orders?.length === 0 ?
-                                <Link to="/" className="link">
-                                    <p className="profile__title">No Orders Placed. Shop Now</p>
-                                </Link>
-                                : null}
-                        </>
-                    }
-                </div>
+        <div className="orders">
+            <div className="orders__nav_title">
                 {id
-                    ? <>
-                        <Order
-                            items={order?.orderItems}
-                            totalPrice={order?.totalPrice}
-                            createdAt={order?.createdAt}
-                            id={order?._id}
-                            shippingAddress={order?.shippingAddress}
-                        />
-                        {loading && <Loading />}
-                        {error && <Error error={error} />}
+                    ?
+                    <>
+                        {loading ? <Loading /> : error ? <Error error={error} /> :
+                            <>
+                                <p className="profile__title">Order Details</p>
+                                <Order
+                                    items={order?.orderItems}
+                                    totalPrice={order?.totalPrice}
+                                    createdAt={order?.createdAt}
+                                    id={order?._id}
+                                    shippingAddress={order?.shippingAddress}
+                                />
+                            </>}
                     </>
                     :
                     <>
-                        {orders?.length > 0 ? orders?.map(order =>
-                            <Order
-                                key={order?._id}
-                                items={order?.orderItems}
-                                totalPrice={order?.totalPrice}
-                                createdAt={order?.createdAt}
-                                id={order?._id}
-                                shippingAddress={order?.shippingAddress} />
-                        ) : null}
-                        {loadingOrders && <Loading />}
-                        {errorOrders && <Error error={errorOrders} />}
+                        {loadingOrders ? <Loading /> : errorOrders ? <Error error={errorOrders} /> :
+                            <>
+                                <div className="profile__nav">
+                                    <Link style={{ textDecoration: 'none' }} to="/account">
+                                        <p className="profile__account">Your Account</p>
+                                    </Link>
+                                    <ArrowRightIcon className="arrow__icon" fontSize='small' />
+                                    <span>Orders</span>
+                                </div>
+                                <p className="profile__title">Your Orders ({orders?.length})</p>
+                                {orders?.length > 0
+                                    ? <>
+                                        {orders?.map(order =>
+                                            <Order
+                                                key={order?._id}
+                                                items={order?.orderItems}
+                                                totalPrice={order?.totalPrice}
+                                                createdAt={order?.createdAt}
+                                                id={order?._id}
+                                                shippingAddress={order?.shippingAddress} />
+                                        )}
+                                    </> :
+                                    <Link to="/" className="link">
+                                        <p className="profile__title">No Orders Placed. Shop Now</p>
+                                    </Link>
+                                }
+                            </>
+                        }
                     </>
                 }
             </div>
-        </>
+        </div>
     )
 }
 

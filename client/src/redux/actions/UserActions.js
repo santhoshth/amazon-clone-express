@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, USER_LOGOUT, USER_REGISTER_FAIL, USER_REGISTER_SUCCESS, USER_REGISTER_REQUEST, USER_UPDATE_PROFILE_REQUEST, USER_UPDATE_PROFILE_SUCCESS, USER_UPDATE_PROFILE_FAIL } from './../constants/UserConstants';
 import { ORDER_LIST_RESET } from './../constants/OrderConstants';
+import URL from '../../Url';
 
 // LOGIN
 export const login = (email, password) => async (dispatch) => {
@@ -14,7 +15,7 @@ export const login = (email, password) => async (dispatch) => {
         };
 
         const { data } = await axios.post(
-            `/api/users/login`,
+            `${URL}/api/users/login`,
             { email, password },
             config
         );
@@ -36,7 +37,6 @@ export const logout = () => (dispatch) => {
     localStorage.removeItem("userInfo");
     dispatch({ type: USER_LOGOUT });
     dispatch({ type: ORDER_LIST_RESET });
-    // dispatch({ type: USER_DETAILS_RESET });
 
     // this will redirect to login page once logged out
     document.location.href = "/";
@@ -54,7 +54,7 @@ export const register = (name, email, password) => async (dispatch) => {
         };
 
         const { data } = await axios.post(
-            `/api/users`,
+            `${URL}/api/users`,
             { name, email, password },
             config
         );
@@ -72,36 +72,6 @@ export const register = (name, email, password) => async (dispatch) => {
     }
 }
 
-// USER DETAILS
-// export const getUserDetails = (id) => async (dispatch, getState) => {
-//     try {
-//         dispatch({ type: USER_DETAILS_REQUEST });
-
-//         const { userLogin: { userInfo }, } = getState();
-
-//         const config = {
-//             headers: {
-//                 Authorization: `Bearer ${userInfo.jwtToken}`
-//             },
-//         };
-
-//         const { data } = await axios.get(`/api/users/${id}`, config);
-
-//         dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
-
-//     } catch (error) {
-//         const message = error.response && error.response.data.message ? error.response.data.message : error.message;
-
-//         if (message === "Not authorized, token failed") {
-//             dispatch(logout());
-//         }
-//         dispatch({
-//             type: USER_DETAILS_FAIL,
-//             payload: message,
-//         });
-//     }
-// }
-
 // UPDATE PROFILE
 export const updateUserProfile = (user) => async (dispatch, getState) => {
     try {
@@ -116,7 +86,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
             },
         };
 
-        const { data } = await axios.put(`/api/users/profile`, user, config);
+        const { data } = await axios.put(`${URL}/api/users/profile`, user, config);
 
         dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data });

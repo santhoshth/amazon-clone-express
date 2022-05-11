@@ -1,6 +1,7 @@
 .profile__outer {
     background-color: white;
-    padding-top: 10px
+    padding-top: 10px;
+    min-height: 100vh;
 }
 
 .profile {

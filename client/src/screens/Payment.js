@@ -9,9 +9,9 @@ import { ORDER_CREATE_RESET } from '../redux/constants/OrderConstants';
 import { createOrder } from './../redux/actions/OrderActions';
 import Error from './../components/Error';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import URL from '../Url';
 
 function Payment() {
-
     // payment related stuff
     const stripe = useStripe();
     const elements = useElements();
@@ -46,7 +46,7 @@ function Payment() {
             // generate the special stripe secret which allows us to charge a customer
             if (cartTotalPrice > 0) {
                 const getClientSecret = async () => {
-                    const { data } = await axios.post(`api/payments/create?total=${cartTotalPrice * 100}`);
+                    const { data } = await axios.post(`${URL}/api/payments/create?total=${cartTotalPrice * 100}`);
                     setClientSecret(data.clientSecret);
                 }
                 getClientSecret();
@@ -70,13 +70,10 @@ function Payment() {
             }
         }).then(({ paymentIntent }) => {
             // paymentIntent means payment confirmation
-            // console.log(paymentIntent);
 
             setPaySucceeded(true);
             setPayError(null);
             setPayProcessing(false);
-
-            // console.log("payment is success");
 
             dispatch(createOrder({
                 user: userInfo,
