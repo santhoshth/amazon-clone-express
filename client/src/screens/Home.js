@@ -8,6 +8,7 @@ import Loading from './../components/Loading';
 import Error from './../components/Error';
 import { useParams } from 'react-router-dom';
 import Footer from './../components/Footer';
+import Container from '../components/Container';
 
 function Home() {
     const dispatch = useDispatch();
@@ -22,25 +23,29 @@ function Home() {
 
     return (
         <>
-            {loading ? (
-                <Loading />
-            ) : error ? (
-                <Error error={error} />
-            ) : (
+            {loading ? <Loading /> : error ? <Error error={error} />
+                :
                 <>
-                    {products
-                        ?
-                        <>
+                    {products ? <>
+                        <div className="slider__container">
                             <Slider />
-                            <CarouselSlider key={"smartphones"} products={products.filter(p => p.category === "smartphones")} />
-                            <CarouselSlider key={"books"} products={products.filter(p => p.category === "books")} />
-                            <CarouselSlider key={"gadgets"} products={products.filter(p => p.category === "gadgets")} />
-                            <CarouselSlider key={"others"} products={products.filter(p => p.category === "others")} />
-                            <Footer />
-                        </>
-                        : null}
+                        </div>
+                        <div className="container__row">
+                            <Container title={"Top picks for you"} products={products.filter(p => p.category === "smartphones")} />
+                            <Container title={"Best seller in books"} products={products.filter(p => p.category === "books")} />
+                            <Container title={"Keep shopping for"} products={products.filter(p => p.category === "others")} />
+                            <Container title={"Buy Again"} products={products.filter(p => p.category === "gadgets")} />
+                        </div>
+                        <div className="carousel__container">
+                            <CarouselSlider key={"smartphones"} title={"Mobiles"} products={products.filter(p => p.category === "smartphones")} />
+                            <CarouselSlider key={"books"} title={"Books"} products={products.filter(p => p.category === "books")} />
+                            <CarouselSlider key={"gadgets"} title={"Gadgets"} products={products.filter(p => p.category === "gadgets")} />
+                            <CarouselSlider key={"others"} title={"Keep Shopping"} products={products.filter(p => p.category === "others")} />
+                        </div>
+                        <Footer />
+                    </> : null}
                 </>
-            )}
+            }
         </>
     )
 }

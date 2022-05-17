@@ -7,6 +7,7 @@ import '../styles/Account.css';
 import Footer from './../components/Footer';
 
 function Account() {
+    window.scrollTo(0, 0);
     const navigate = useNavigate();
 
     const userLogin = useSelector((state) => state.userLogin);

@@ -4,7 +4,7 @@ import React from 'react'
 import Carousel from 'react-multi-carousel';
 import Product from './Product';
 
-function CarouselSlider({ products }) {
+function CarouselSlider({ products, title }) {
     const responsive = {
         superLargeDesktop: {
             // the naming can be any
@@ -13,7 +13,7 @@ function CarouselSlider({ products }) {
         },
         desktop: {
             breakpoint: { max: 3000, min: 1024 },
-            items: 3
+            items: 6
         },
         tablet: {
             breakpoint: { max: 1024, min: 464 },
@@ -29,6 +29,7 @@ function CarouselSlider({ products }) {
 
     return (
         <div className="carousel">
+            <p className="carousel__title">{title}</p>
             <Carousel
                 deviceType={device}
                 draggable={false}
@@ -45,6 +46,7 @@ function CarouselSlider({ products }) {
                                 price={product?.price}
                                 rating={product?.rating}
                                 image={product?.image}
+                                numReviews={product?.numReviews}
                             />
                         );
                     })

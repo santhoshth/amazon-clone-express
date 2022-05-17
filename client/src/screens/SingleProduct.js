@@ -10,10 +10,12 @@ import Error from '../components/Error';
 import { PRODUCT_CREATE_REVIEW_RESET } from '../redux/constants/ProductConstants';
 import { ToastContainer, toast } from 'react-toastify';
 import Footer from '../components/Footer';
+import { numberFormat } from './../NumberFormat';
 
 const SingleProduct = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const toastId = React.useRef(null);
 
@@ -21,8 +23,6 @@ const SingleProduct = () => {
     const [rating, setRating] = useState("");
     const [title, setTitle] = useState("");
     const [comment, setComment] = useState("");
-
-    const dispatch = useDispatch();
 
     const productDetails = useSelector((state) => state.productDetails);
     const { loading, error, product } = productDetails;
@@ -51,13 +51,17 @@ const SingleProduct = () => {
 
     const submitReview = (e) => {
         e.preventDefault();
-        if (rating !== "") {
+        if (rating !== "" && title !== "" && comment !== "") {
             dispatch(createProductReview(id, {
                 rating, title, comment,
             }))
-        } else {
+        } else if (rating === "") {
             if (!toast.isActive(toastId.current)) {
                 toastId.current = toast.error("Select rating");
+            }
+        } else {
+            if (!toast.isActive(toastId.current)) {
+                toastId.current = toast.error("Enter review title and comment");
             }
         }
     }
@@ -83,7 +87,7 @@ const SingleProduct = () => {
                                 <div className="product__container">
                                     <div className="row">
                                         <p>Price</p>
-                                        <strong>₹{product.price}</strong>
+                                        <strong>{numberFormat(product.price)}</strong>
                                     </div>
                                     <div className="row">
                                         <p>Availability</p>

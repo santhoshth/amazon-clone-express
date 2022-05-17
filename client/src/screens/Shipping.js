@@ -4,6 +4,8 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveShippingAddress } from './../redux/actions/CartActions';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import { addressValidation, cityValidation, nameValidation, pincodeValidation } from '../InputValidation';
 
 function Profile() {
     window.scrollTo(0, 0);
@@ -21,7 +23,11 @@ function Profile() {
     const [address, setAddress] = useState(shippingAddress?.address);
     const [city, setCity] = useState(shippingAddress?.city);
     const [pincode, setPincode] = useState(shippingAddress?.pincode);
-    const [country, setCountry] = useState(shippingAddress?.country);
+
+    const [errorName, setErrorName] = useState('');
+    const [errorAddress, setErrorAddress] = useState('');
+    const [errorCity, setErrorCity] = useState('');
+    const [errorPincode, setErrorPincode] = useState('');
 
     useEffect(() => {
         if (userInfo === null) {
@@ -29,10 +35,44 @@ function Profile() {
         }
     }, [userInfo, navigate])
 
+    const pincodeOnChange = (e) => {
+        if (new RegExp(/^([0-9]){0,6}$/).test(e.target.value))
+            setPincode(e.target.value);
+    }
+
+    const nameOnChange = (e) => {
+        if (new RegExp(/^([a-zA-Z]+\s?){0,}$/).test(e.target.value) && e.target.value.length <= 20) {
+            setName(e.target.value);
+        }
+    }
+
+    const cityOnChange = (e) => {
+        if (new RegExp(/^([a-zA-Z]+\s?){0,}$/).test(e.target.value) && e.target.value.length <= 20) {
+            setCity(e.target.value);
+        }
+    }
+
+    const addressOnChange = (e) => {
+        if ((/^([a-zA-Z0-9]+\s?){0,}$/).test(e.target.value) && e.target.value.length <= 30) {
+            setAddress(e.target.value);
+        }
+    }
+
+    const allValidationClear = () => {
+        return name !== "" && address !== "" && city !== "" && pincode !== "" && errorName === "" && errorAddress === "" && errorCity === "" && errorPincode === "" ? true : false;
+    }
+
     const shippingHandler = (e) => {
         e.preventDefault();
-        dispatch(saveShippingAddress({ name, address, city, pincode, country }));
-        navigate('/payment')
+        setErrorName(nameValidation(name));
+        setErrorAddress(addressValidation(address));
+        setErrorCity(cityValidation(city));
+        setErrorPincode(pincodeValidation(pincode));
+
+        if (allValidationClear()) {
+            dispatch(saveShippingAddress({ name, address, city, pincode, country: "India" }));
+            navigate('/payment')
+        }
     }
 
     return (
@@ -57,8 +97,16 @@ function Profile() {
                                             type="text"
                                             required
                                             value={name}
-                                            onChange={(e) => setName(e.target.value)}
+                                            onChange={(e) => nameOnChange(e)}
                                         />
+                                        <div className="validation__error">
+                                            {errorName &&
+                                                <>
+                                                    <PriorityHighIcon className='validation__icon' fontSize='small' />
+                                                    <p>{errorName}</p>
+                                                </>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -70,8 +118,16 @@ function Profile() {
                                             type="email"
                                             required={true}
                                             value={address}
-                                            onChange={(e) => setAddress(e.target.value)}
+                                            onChange={(e) => addressOnChange(e)}
                                         />
+                                        <div className="validation__error">
+                                            {errorAddress &&
+                                                <>
+                                                    <PriorityHighIcon className='validation__icon' fontSize='small' />
+                                                    <p>{errorAddress}</p>
+                                                </>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -82,8 +138,16 @@ function Profile() {
                                         <input
                                             type="text"
                                             value={city}
-                                            onChange={(e) => setCity(e.target.value)}
+                                            onChange={(e) => cityOnChange(e)}
                                         />
+                                        <div className="validation__error">
+                                            {errorCity &&
+                                                <>
+                                                    <PriorityHighIcon className='validation__icon' fontSize='small' />
+                                                    <p>{errorCity}</p>
+                                                </>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -95,8 +159,16 @@ function Profile() {
                                             type="text"
                                             placeholder="6 digits [0-9] PIN code"
                                             value={pincode}
-                                            onChange={(e) => setPincode(e.target.value)}
+                                            onChange={(e) => pincodeOnChange(e)}
                                         />
+                                        <div className="validation__error">
+                                            {errorPincode &&
+                                                <>
+                                                    <PriorityHighIcon className='validation__icon' fontSize='small' />
+                                                    <p>{errorPincode}</p>
+                                                </>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -106,8 +178,8 @@ function Profile() {
                                     <div className="new__input__shipping">
                                         <input
                                             type="text"
-                                            value={country}
-                                            onChange={(e) => setCountry(e.target.value)}
+                                            value={"India"}
+                                            readOnly
                                         />
                                     </div>
                                 </div>

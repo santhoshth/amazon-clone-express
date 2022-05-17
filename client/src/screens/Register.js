@@ -4,6 +4,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../redux/actions/UserActions';
 import Error from '../components/Error';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import { emailValidation, nameValidation, passwordValidation } from '../InputValidation';
 
 function Register() {
     window.scrollTo(0, 0);
@@ -16,6 +18,10 @@ function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const [errorName, setErrorName] = useState('');
+    const [errorEmail, setErrorEmail] = useState('');
+    const [errorPassword, setErrorPassword] = useState('');
+
     const redirect = location.search ? location.search.split("=")[1] : "/";
 
     const userRegister = useSelector((state) => state.userRegister);
@@ -27,10 +33,29 @@ function Register() {
         }
     }, [userInfo, navigate, redirect]);
 
+    const nameOnChange = (e) => {
+        if ((/^([a-zA-Z]+\s?){0,}$/).test(e.target.value) && e.target.value.length <= 20) {
+            setName(e.target.value);
+        }
+    }
+
+    const passwordOnChange = (e) => {
+        if ((/^([a-zA-Z0-9!@#$%^&*]){0,}$/).test(e.target.value) && e.target.value.length <= 20) {
+            setPassword(e.target.value);
+        }
+    }
+
     const registerHandle = e => {
         // to avoid refreshing the page on clicking submit
         e.preventDefault();
-        dispatch(register(name, email, password));
+
+        setErrorName(nameValidation(name));
+        setErrorEmail(emailValidation(email));
+        setErrorPassword(passwordValidation(password));
+
+        if (errorName === "" && errorEmail === "" && errorPassword === "" && name !== "" && email !== "" && password !== "") {
+            dispatch(register(name, email, password));
+        }
     }
 
     return (
@@ -42,23 +67,50 @@ function Register() {
             <div className="login__container">
                 <p className="login__title">Create Account</p>
                 <form className="login__form">
-                    <h5>Your name</h5>
-                    <input type="text" placeholder="First and last name" value={name} onChange={e => setName(e.target.value)} />
-                    <h5>Email</h5>
+                    <p className="login__field">Your name</p>
+                    <input type="text" placeholder="First and last name" value={name} onChange={e => nameOnChange(e)} />
+                    <div className="validation__error">
+                        {errorName &&
+                            <>
+                                <PriorityHighIcon className='validation__icon' fontSize='small' />
+                                <p>{errorName}</p>
+                            </>
+                        }
+                    </div>
+
+                    <p className="login__field">Email</p>
                     <input type="text" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
-                    <h5>Password</h5>
-                    <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+                    <div className="validation__error">
+                        {errorEmail &&
+                            <>
+                                <PriorityHighIcon className='validation__icon' fontSize='small' />
+                                <p>{errorEmail}</p>
+                            </>
+                        }
+                    </div>
+
+                    <p className="login__field">Password</p>
+                    <input type="password" placeholder="Password" value={password} onChange={e => passwordOnChange(e)} />
+                    <div className="validation__error">
+                        {errorPassword &&
+                            <>
+                                <PriorityHighIcon className='validation__icon' fontSize='small' />
+                                <p>{errorPassword}</p>
+                            </>
+                        }
+                    </div>
+
                     <button type="submit" onClick={e => registerHandle(e)}>Sign Up</button>
                 </form>
                 <p className="login__conditions">By continuing, you agree to Amazon Fake Clone's Conditions of Use and Privacy Notice. </p>
-                <p className="login__conditions">
+                <div className="login__conditions">
                     Already have an account?
                     <p>
                         <Link className="link link_login" to={redirect ? `/login?redirect=${redirect}` : "/login"}>
                             Sign in
                         </Link>
                     </p>
-                </p>
+                </div>
             </div>
         </div>
     )

@@ -1,6 +1,6 @@
 export const numberFormat = (value) => {
     return new Intl.NumberFormat('en-IN', {
+        style: 'currency',
         currency: 'INR',
-        maximumSignificantDigits: 3
     }).format(value);
 }

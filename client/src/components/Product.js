@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Rating from "./Rating";
 import { numberFormat } from "../NumberFormat";
 
-function Product({ id, title, price, rating, image }) {
+function Product({ id, title, price, rating, image, numReviews }) {
 
     const navigate = useNavigate();
 
@@ -19,21 +19,20 @@ function Product({ id, title, price, rating, image }) {
     }
 
     return (
-        <div className="product">
-            <div className="product__info" key={id}>
+        <div className="product" key={id}>
+            <img src={image} onClick={toProduct} alt="product__image" />
+            <div className="product__info" >
                 <Link className="link" to={`/products/${id}`}>
-                    <p>{title}</p>
+                    <p className="product__title">{title}</p>
                 </Link>
+                <div className="product__rating">
+                    <Rating value={rating} /> <p className="product__title rating__count">{numReviews}</p>
+                </div>
                 <p className="product__price">
-                    <small>₹</small>
                     <strong>{numberFormat(price)}</strong>
                 </p>
-                <div className="product__rating">
-                    <Rating value={rating} />
-                </div>
             </div>
-            <img src={image} onClick={toProduct} alt="product__image" />
-            <button className="product__button" onClick={addToCart}>Add to Cart</button>
+            {/* <button className="product__button" onClick={addToCart}>Add to Cart</button> */}
         </div >
     )
 }

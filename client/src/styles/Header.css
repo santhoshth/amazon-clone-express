@@ -6,7 +6,9 @@
     background-color: #131921;
     position: sticky;
     z-index: 10000;
-    min-width: 1000px;
+    /* min-width: 1000px; */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .link {
@@ -17,14 +19,40 @@
 .header__logo {
     width: 100px;
     object-fit: contain;
-    margin: 0 20px;
-    margin-top: 18px;
+    margin: 0 15px;
+    margin-top: 10px;
+    margin-bottom: auto;
+}
+
+.header__address {
+    display: flex;
+    flex-direction: row;
+    min-width: 142px;
+}
+
+.header__address__logo {
+    color: white;
+    margin-top: 14px;
+}
+
+.header__address__details {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+    color: white;
+}
+
+.address__font {
+    font-weight: 600 !important;
+    color: #bbc0bb;
 }
 
 .header__search {
     display: flex;
     align-items: center;
     flex: 1;
+    margin-left: 10px;
+    min-width: 350px;
 }
 
 .header__search>form {
@@ -33,23 +61,46 @@
     flex: 1;
 }
 
+.header__search:focus-within {
+    border-radius: 5px;
+    border: 2px solid #ff9900;
+}
+
 .header__searchInput {
-    height: 12px;
+    height: 18px;
     padding: 10px;
     width: 100%;
     border: none;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.header__searchInput:focus {
+    outline: none !important;
 }
 
 .header__searchIcon {
     padding: 5px;
-    height: 22px !important;
+    height: 28px !important;
     background-color: #febd69;
-    color: #705c43;
+    color: #363534;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.header__searchIcon:hover {
+    background-color: #f3a847;
+}
+
+.header__searchIcon:active {
+    background-color: #febd69;
 }
 
 .header__nav {
     display: flex;
     justify-content: space-evenly;
+    margin-left: 10px;
+    min-width: 400px;
 }
 
 .header__option {
@@ -71,15 +122,32 @@
     font-weight: 600;
 }
 
+.header__cartIcon__adjustment {
+    margin-top: -7px;
+    display: flex;
+    flex-direction: column;
+}
+
+.header__cart__blank {
+    background-color: #131921;
+    z-index: 10;
+    margin-left: 8px;
+    margin-right: 7px;
+    margin-bottom: -11px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-align: center;
+    font-weight: 600;
+    color: #fb9701;
+}
+
 .header__optionBasket {
-    margin-top: 7px;
     display: flex;
     align-items: center;
     color: white;
 }
 
 .header__basketCount {
-    margin-left: 5px;
-    margin-right: 10px;
-    color: #fb9701;
+    margin-top: 12px;
+    margin-right: 20px;
 }

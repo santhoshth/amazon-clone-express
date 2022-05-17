@@ -37,8 +37,19 @@
     flex-direction: column;
 }
 
-.login__form>h5 {
-    margin-top: 10px;
+.login__field {
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.validation__error {
+    margin-top: 3px;
+    display: flex;
+    flex-direction: row;
+    font-size: 13px;
+    font-weight: 600;
+    color: #d0383f;
 }
 
 .login__form>input {
